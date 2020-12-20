@@ -1,1 +1,1759 @@
-{"kind-local":[{"metadata":{"name":"nginx","namespace":"default","selfLink":"/apis/apps/v1/namespaces/default/deployments/nginx","uid":"5d6967ae-2e92-426b-8c96-59d03a9c3ccf","resourceVersion":"568275","generation":8,"creationTimestamp":"2020-12-01T11:54:43Z","labels":{"app":"nginx"},"annotations":{"deployment.kubernetes.io/revision":"2"}},"spec":{"replicas":1,"selector":{"matchLabels":{"app":"nginx"}},"template":{"metadata":{"creationTimestamp":null,"labels":{"app":"nginx"},"annotations":{"authz.trendyol.com/inject":"true"}},"spec":{"containers":[{"name":"nginx","image":"nginx","resources":{},"terminationMessagePath":"/dev/termination-log","terminationMessagePolicy":"File","imagePullPolicy":"Always"}],"restartPolicy":"Always","terminationGracePeriodSeconds":30,"dnsPolicy":"ClusterFirst","securityContext":{},"schedulerName":"default-scheduler"}},"strategy":{"type":"RollingUpdate","rollingUpdate":{"maxUnavailable":"25%","maxSurge":"25%"}},"revisionHistoryLimit":10,"progressDeadlineSeconds":600},"status":{"observedGeneration":8,"replicas":1,"updatedReplicas":1,"readyReplicas":1,"availableReplicas":1,"conditions":[{"type":"Progressing","status":"True","lastUpdateTime":"2020-12-15T07:46:49Z","lastTransitionTime":"2020-12-01T11:54:43Z","reason":"NewReplicaSetAvailable","message":"ReplicaSet \"nginx-8449bfbf96\" has successfully progressed."},{"type":"Available","status":"True","lastUpdateTime":"2020-12-20T17:34:02Z","lastTransitionTime":"2020-12-20T17:34:02Z","reason":"MinimumReplicasAvailable","message":"Deployment has minimum availability."}]}},{"metadata":{"name":"nginx2","namespace":"default","selfLink":"/apis/apps/v1/namespaces/default/deployments/nginx2","uid":"39bf519a-68c9-447c-a44f-f9e330abe7cf","resourceVersion":"568315","generation":1,"creationTimestamp":"2020-12-01T12:19:19Z","labels":{"app":"nginx2"},"annotations":{"deployment.kubernetes.io/revision":"1"}},"spec":{"replicas":1,"selector":{"matchLabels":{"app":"nginx2"}},"template":{"metadata":{"creationTimestamp":null,"labels":{"app":"nginx2"}},"spec":{"containers":[{"name":"nginx","image":"nginx","resources":{},"terminationMessagePath":"/dev/termination-log","terminationMessagePolicy":"File","imagePullPolicy":"Always"}],"restartPolicy":"Always","terminationGracePeriodSeconds":30,"dnsPolicy":"ClusterFirst","securityContext":{},"schedulerName":"default-scheduler"}},"strategy":{"type":"RollingUpdate","rollingUpdate":{"maxUnavailable":"25%","maxSurge":"25%"}},"revisionHistoryLimit":10,"progressDeadlineSeconds":600},"status":{"observedGeneration":1,"replicas":1,"updatedReplicas":1,"readyReplicas":1,"availableReplicas":1,"conditions":[{"type":"Progressing","status":"True","lastUpdateTime":"2020-12-01T12:37:29Z","lastTransitionTime":"2020-12-01T12:19:19Z","reason":"NewReplicaSetAvailable","message":"ReplicaSet \"nginx2-c74d46595\" has successfully progressed."},{"type":"Available","status":"True","lastUpdateTime":"2020-12-20T17:34:05Z","lastTransitionTime":"2020-12-20T17:34:05Z","reason":"MinimumReplicasAvailable","message":"Deployment has minimum availability."}]}},{"metadata":{"name":"istio-ingressgateway","namespace":"istio-system","selfLink":"/apis/apps/v1/namespaces/istio-system/deployments/istio-ingressgateway","uid":"5b15a66f-47ed-4238-a6aa-9e0625a4019a","resourceVersion":"568296","generation":1,"creationTimestamp":"2020-12-01T11:26:03Z","labels":{"app":"istio-ingressgateway","install.operator.istio.io/owning-resource":"installed-state","install.operator.istio.io/owning-resource-namespace":"istio-system","istio":"ingressgateway","operator.istio.io/component":"IngressGateways","operator.istio.io/managed":"Reconcile","operator.istio.io/version":"1.6.4","release":"istio"},"annotations":{"deployment.kubernetes.io/revision":"1","kubectl.kubernetes.io/last-applied-configuration":"{\"apiVersion\":\"apps/v1\",\"kind\":\"Deployment\",\"metadata\":{\"annotations\":{},\"labels\":{\"app\":\"istio-ingressgateway\",\"install.operator.istio.io/owning-resource\":\"installed-state\",\"install.operator.istio.io/owning-resource-namespace\":\"istio-system\",\"istio\":\"ingressgateway\",\"operator.istio.io/component\":\"IngressGateways\",\"operator.istio.io/managed\":\"Reconcile\",\"operator.istio.io/version\":\"1.6.4\",\"release\":\"istio\"},\"name\":\"istio-ingressgateway\",\"namespace\":\"istio-system\"},\"spec\":{\"selector\":{\"matchLabels\":{\"app\":\"istio-ingressgateway\",\"istio\":\"ingressgateway\"}},\"strategy\":{\"rollingUpdate\":{\"maxSurge\":\"100%\",\"maxUnavailable\":\"25%\"}},\"template\":{\"metadata\":{\"annotations\":{\"sidecar.istio.io/inject\":\"false\"},\"labels\":{\"app\":\"istio-ingressgateway\",\"chart\":\"gateways\",\"heritage\":\"Tiller\",\"istio\":\"ingressgateway\",\"release\":\"istio\",\"service.istio.io/canonical-name\":\"istio-ingressgateway\",\"service.istio.io/canonical-revision\":\"latest\"}},\"spec\":{\"affinity\":{\"nodeAffinity\":{\"preferredDuringSchedulingIgnoredDuringExecution\":[{\"preference\":{\"matchExpressions\":[{\"key\":\"beta.kubernetes.io/arch\",\"operator\":\"In\",\"values\":[\"amd64\"]}]},\"weight\":2},{\"preference\":{\"matchExpressions\":[{\"key\":\"beta.kubernetes.io/arch\",\"operator\":\"In\",\"values\":[\"ppc64le\"]}]},\"weight\":2},{\"preference\":{\"matchExpressions\":[{\"key\":\"beta.kubernetes.io/arch\",\"operator\":\"In\",\"values\":[\"s390x\"]}]},\"weight\":2}],\"requiredDuringSchedulingIgnoredDuringExecution\":{\"nodeSelectorTerms\":[{\"matchExpressions\":[{\"key\":\"beta.kubernetes.io/arch\",\"operator\":\"In\",\"values\":[\"amd64\",\"ppc64le\",\"s390x\"]}]}]}}},\"containers\":[{\"args\":[\"proxy\",\"router\",\"--domain\",\"$(POD_NAMESPACE).svc.cluster.local\",\"--proxyLogLevel=warning\",\"--proxyComponentLogLevel=misc:error\",\"--log_output_level=default:info\",\"--serviceCluster\",\"istio-ingressgateway\",\"--trust-domain=cluster.local\"],\"env\":[{\"name\":\"JWT_POLICY\",\"value\":\"first-party-jwt\"},{\"name\":\"PILOT_CERT_PROVIDER\",\"value\":\"istiod\"},{\"name\":\"CA_ADDR\",\"value\":\"istiod.istio-system.svc:15012\"},{\"name\":\"NODE_NAME\",\"valueFrom\":{\"fieldRef\":{\"apiVersion\":\"v1\",\"fieldPath\":\"spec.nodeName\"}}},{\"name\":\"POD_NAME\",\"valueFrom\":{\"fieldRef\":{\"apiVersion\":\"v1\",\"fieldPath\":\"metadata.name\"}}},{\"name\":\"POD_NAMESPACE\",\"valueFrom\":{\"fieldRef\":{\"apiVersion\":\"v1\",\"fieldPath\":\"metadata.namespace\"}}},{\"name\":\"INSTANCE_IP\",\"valueFrom\":{\"fieldRef\":{\"apiVersion\":\"v1\",\"fieldPath\":\"status.podIP\"}}},{\"name\":\"HOST_IP\",\"valueFrom\":{\"fieldRef\":{\"apiVersion\":\"v1\",\"fieldPath\":\"status.hostIP\"}}},{\"name\":\"SERVICE_ACCOUNT\",\"valueFrom\":{\"fieldRef\":{\"fieldPath\":\"spec.serviceAccountName\"}}},{\"name\":\"CANONICAL_SERVICE\",\"valueFrom\":{\"fieldRef\":{\"fieldPath\":\"metadata.labels['service.istio.io/canonical-name']\"}}},{\"name\":\"CANONICAL_REVISION\",\"valueFrom\":{\"fieldRef\":{\"fieldPath\":\"metadata.labels['service.istio.io/canonical-revision']\"}}},{\"name\":\"ISTIO_META_WORKLOAD_NAME\",\"value\":\"istio-ingressgateway\"},{\"name\":\"ISTIO_META_OWNER\",\"value\":\"kubernetes://apis/apps/v1/namespaces/istio-system/deployments/istio-ingressgateway\"},{\"name\":\"ISTIO_META_MESH_ID\",\"value\":\"cluster.local\"},{\"name\":\"ISTIO_META_ROUTER_MODE\",\"value\":\"sni-dnat\"},{\"name\":\"ISTIO_META_CLUSTER_ID\",\"value\":\"Kubernetes\"}],\"image\":\"docker.io/istio/proxyv2:1.6.4\",\"name\":\"istio-proxy\",\"ports\":[{\"containerPort\":15021},{\"containerPort\":8080},{\"containerPort\":8443},{\"containerPort\":15443},{\"containerPort\":15011},{\"containerPort\":15012},{\"containerPort\":8060},{\"containerPort\":853},{\"containerPort\":15090,\"name\":\"http-envoy-prom\",\"protocol\":\"TCP\"}],\"readinessProbe\":{\"failureThreshold\":30,\"httpGet\":{\"path\":\"/healthz/ready\",\"port\":15021,\"scheme\":\"HTTP\"},\"initialDelaySeconds\":1,\"periodSeconds\":2,\"successThreshold\":1,\"timeoutSeconds\":1},\"resources\":{\"limits\":{\"cpu\":\"2000m\",\"memory\":\"1024Mi\"},\"requests\":{\"cpu\":\"100m\",\"memory\":\"128Mi\"}},\"volumeMounts\":[{\"mountPath\":\"/etc/istio/proxy\",\"name\":\"istio-envoy\"},{\"mountPath\":\"/etc/istio/config\",\"name\":\"config-volume\"},{\"mountPath\":\"/var/run/secrets/istio\",\"name\":\"istiod-ca-cert\"},{\"mountPath\":\"/var/run/ingress_gateway\",\"name\":\"ingressgatewaysdsudspath\"},{\"mountPath\":\"/etc/istio/pod\",\"name\":\"podinfo\"},{\"mountPath\":\"/etc/istio/ingressgateway-certs\",\"name\":\"ingressgateway-certs\",\"readOnly\":true},{\"mountPath\":\"/etc/istio/ingressgateway-ca-certs\",\"name\":\"ingressgateway-ca-certs\",\"readOnly\":true}]}],\"serviceAccountName\":\"istio-ingressgateway-service-account\",\"volumes\":[{\"configMap\":{\"name\":\"istio-ca-root-cert\"},\"name\":\"istiod-ca-cert\"},{\"downwardAPI\":{\"items\":[{\"fieldRef\":{\"fieldPath\":\"metadata.labels\"},\"path\":\"labels\"},{\"fieldRef\":{\"fieldPath\":\"metadata.annotations\"},\"path\":\"annotations\"}]},\"name\":\"podinfo\"},{\"emptyDir\":{},\"name\":\"istio-envoy\"},{\"emptyDir\":{},\"name\":\"ingressgatewaysdsudspath\"},{\"configMap\":{\"name\":\"istio\",\"optional\":true},\"name\":\"config-volume\"},{\"name\":\"ingressgateway-certs\",\"secret\":{\"optional\":true,\"secretName\":\"istio-ingressgateway-certs\"}},{\"name\":\"ingressgateway-ca-certs\",\"secret\":{\"optional\":true,\"secretName\":\"istio-ingressgateway-ca-certs\"}}]}}}}\n"}},"spec":{"replicas":1,"selector":{"matchLabels":{"app":"istio-ingressgateway","istio":"ingressgateway"}},"template":{"metadata":{"creationTimestamp":null,"labels":{"app":"istio-ingressgateway","chart":"gateways","heritage":"Tiller","istio":"ingressgateway","release":"istio","service.istio.io/canonical-name":"istio-ingressgateway","service.istio.io/canonical-revision":"latest"},"annotations":{"sidecar.istio.io/inject":"false"}},"spec":{"volumes":[{"name":"istiod-ca-cert","configMap":{"name":"istio-ca-root-cert","defaultMode":420}},{"name":"podinfo","downwardAPI":{"items":[{"path":"labels","fieldRef":{"apiVersion":"v1","fieldPath":"metadata.labels"}},{"path":"annotations","fieldRef":{"apiVersion":"v1","fieldPath":"metadata.annotations"}}],"defaultMode":420}},{"name":"istio-envoy","emptyDir":{}},{"name":"ingressgatewaysdsudspath","emptyDir":{}},{"name":"config-volume","configMap":{"name":"istio","defaultMode":420,"optional":true}},{"name":"ingressgateway-certs","secret":{"secretName":"istio-ingressgateway-certs","defaultMode":420,"optional":true}},{"name":"ingressgateway-ca-certs","secret":{"secretName":"istio-ingressgateway-ca-certs","defaultMode":420,"optional":true}}],"containers":[{"name":"istio-proxy","image":"docker.io/istio/proxyv2:1.6.4","args":["proxy","router","--domain","$(POD_NAMESPACE).svc.cluster.local","--proxyLogLevel=warning","--proxyComponentLogLevel=misc:error","--log_output_level=default:info","--serviceCluster","istio-ingressgateway","--trust-domain=cluster.local"],"ports":[{"containerPort":15021,"protocol":"TCP"},{"containerPort":8080,"protocol":"TCP"},{"containerPort":8443,"protocol":"TCP"},{"containerPort":15443,"protocol":"TCP"},{"containerPort":15011,"protocol":"TCP"},{"containerPort":15012,"protocol":"TCP"},{"containerPort":8060,"protocol":"TCP"},{"containerPort":853,"protocol":"TCP"},{"name":"http-envoy-prom","containerPort":15090,"protocol":"TCP"}],"env":[{"name":"JWT_POLICY","value":"first-party-jwt"},{"name":"PILOT_CERT_PROVIDER","value":"istiod"},{"name":"CA_ADDR","value":"istiod.istio-system.svc:15012"},{"name":"NODE_NAME","valueFrom":{"fieldRef":{"apiVersion":"v1","fieldPath":"spec.nodeName"}}},{"name":"POD_NAME","valueFrom":{"fieldRef":{"apiVersion":"v1","fieldPath":"metadata.name"}}},{"name":"POD_NAMESPACE","valueFrom":{"fieldRef":{"apiVersion":"v1","fieldPath":"metadata.namespace"}}},{"name":"INSTANCE_IP","valueFrom":{"fieldRef":{"apiVersion":"v1","fieldPath":"status.podIP"}}},{"name":"HOST_IP","valueFrom":{"fieldRef":{"apiVersion":"v1","fieldPath":"status.hostIP"}}},{"name":"SERVICE_ACCOUNT","valueFrom":{"fieldRef":{"apiVersion":"v1","fieldPath":"spec.serviceAccountName"}}},{"name":"CANONICAL_SERVICE","valueFrom":{"fieldRef":{"apiVersion":"v1","fieldPath":"metadata.labels['service.istio.io/canonical-name']"}}},{"name":"CANONICAL_REVISION","valueFrom":{"fieldRef":{"apiVersion":"v1","fieldPath":"metadata.labels['service.istio.io/canonical-revision']"}}},{"name":"ISTIO_META_WORKLOAD_NAME","value":"istio-ingressgateway"},{"name":"ISTIO_META_OWNER","value":"kubernetes://apis/apps/v1/namespaces/istio-system/deployments/istio-ingressgateway"},{"name":"ISTIO_META_MESH_ID","value":"cluster.local"},{"name":"ISTIO_META_ROUTER_MODE","value":"sni-dnat"},{"name":"ISTIO_META_CLUSTER_ID","value":"Kubernetes"}],"resources":{"limits":{"cpu":"2","memory":"1Gi"},"requests":{"cpu":"100m","memory":"128Mi"}},"volumeMounts":[{"name":"istio-envoy","mountPath":"/etc/istio/proxy"},{"name":"config-volume","mountPath":"/etc/istio/config"},{"name":"istiod-ca-cert","mountPath":"/var/run/secrets/istio"},{"name":"ingressgatewaysdsudspath","mountPath":"/var/run/ingress_gateway"},{"name":"podinfo","mountPath":"/etc/istio/pod"},{"name":"ingressgateway-certs","readOnly":true,"mountPath":"/etc/istio/ingressgateway-certs"},{"name":"ingressgateway-ca-certs","readOnly":true,"mountPath":"/etc/istio/ingressgateway-ca-certs"}],"readinessProbe":{"httpGet":{"path":"/healthz/ready","port":15021,"scheme":"HTTP"},"initialDelaySeconds":1,"timeoutSeconds":1,"periodSeconds":2,"successThreshold":1,"failureThreshold":30},"terminationMessagePath":"/dev/termination-log","terminationMessagePolicy":"File","imagePullPolicy":"IfNotPresent"}],"restartPolicy":"Always","terminationGracePeriodSeconds":30,"dnsPolicy":"ClusterFirst","serviceAccountName":"istio-ingressgateway-service-account","serviceAccount":"istio-ingressgateway-service-account","securityContext":{},"affinity":{"nodeAffinity":{"requiredDuringSchedulingIgnoredDuringExecution":{"nodeSelectorTerms":[{"matchExpressions":[{"key":"beta.kubernetes.io/arch","operator":"In","values":["amd64","ppc64le","s390x"]}]}]},"preferredDuringSchedulingIgnoredDuringExecution":[{"weight":2,"preference":{"matchExpressions":[{"key":"beta.kubernetes.io/arch","operator":"In","values":["amd64"]}]}},{"weight":2,"preference":{"matchExpressions":[{"key":"beta.kubernetes.io/arch","operator":"In","values":["ppc64le"]}]}},{"weight":2,"preference":{"matchExpressions":[{"key":"beta.kubernetes.io/arch","operator":"In","values":["s390x"]}]}}]}},"schedulerName":"default-scheduler"}},"strategy":{"type":"RollingUpdate","rollingUpdate":{"maxUnavailable":"25%","maxSurge":"100%"}},"revisionHistoryLimit":10,"progressDeadlineSeconds":600},"status":{"observedGeneration":1,"replicas":1,"updatedReplicas":1,"readyReplicas":1,"availableReplicas":1,"conditions":[{"type":"Progressing","status":"True","lastUpdateTime":"2020-12-01T11:26:25Z","lastTransitionTime":"2020-12-01T11:26:03Z","reason":"NewReplicaSetAvailable","message":"ReplicaSet \"istio-ingressgateway-59ddcb9559\" has successfully progressed."},{"type":"Available","status":"True","lastUpdateTime":"2020-12-20T17:34:03Z","lastTransitionTime":"2020-12-20T17:34:03Z","reason":"MinimumReplicasAvailable","message":"Deployment has minimum availability."}]}},{"metadata":{"name":"istiod","namespace":"istio-system","selfLink":"/apis/apps/v1/namespaces/istio-system/deployments/istiod","uid":"9ddc0a58-1696-44c6-92ed-e96db2861132","resourceVersion":"568310","generation":1,"creationTimestamp":"2020-12-01T11:25:26Z","labels":{"app":"istiod","install.operator.istio.io/owning-resource":"installed-state","install.operator.istio.io/owning-resource-namespace":"istio-system","istio":"pilot","istio.io/rev":"default","operator.istio.io/component":"Pilot","operator.istio.io/managed":"Reconcile","operator.istio.io/version":"1.6.4","release":"istio"},"annotations":{"deployment.kubernetes.io/revision":"1","kubectl.kubernetes.io/last-applied-configuration":"{\"apiVersion\":\"apps/v1\",\"kind\":\"Deployment\",\"metadata\":{\"annotations\":{},\"labels\":{\"app\":\"istiod\",\"install.operator.istio.io/owning-resource\":\"installed-state\",\"install.operator.istio.io/owning-resource-namespace\":\"istio-system\",\"istio\":\"pilot\",\"istio.io/rev\":\"default\",\"operator.istio.io/component\":\"Pilot\",\"operator.istio.io/managed\":\"Reconcile\",\"operator.istio.io/version\":\"1.6.4\",\"release\":\"istio\"},\"name\":\"istiod\",\"namespace\":\"istio-system\"},\"spec\":{\"selector\":{\"matchLabels\":{\"istio\":\"pilot\"}},\"strategy\":{\"rollingUpdate\":{\"maxSurge\":\"100%\",\"maxUnavailable\":\"25%\"}},\"template\":{\"metadata\":{\"annotations\":{\"sidecar.istio.io/inject\":\"false\"},\"labels\":{\"app\":\"istiod\",\"istio\":\"pilot\",\"istio.io/rev\":\"default\"}},\"spec\":{\"containers\":[{\"args\":[\"discovery\",\"--monitoringAddr=:15014\",\"--log_output_level=default:info\",\"--domain\",\"cluster.local\",\"--trust-domain=cluster.local\",\"--keepaliveMaxServerConnectionAge\",\"30m\"],\"env\":[{\"name\":\"REVISION\",\"value\":\"default\"},{\"name\":\"JWT_POLICY\",\"value\":\"first-party-jwt\"},{\"name\":\"PILOT_CERT_PROVIDER\",\"value\":\"istiod\"},{\"name\":\"POD_NAME\",\"valueFrom\":{\"fieldRef\":{\"apiVersion\":\"v1\",\"fieldPath\":\"metadata.name\"}}},{\"name\":\"POD_NAMESPACE\",\"valueFrom\":{\"fieldRef\":{\"apiVersion\":\"v1\",\"fieldPath\":\"metadata.namespace\"}}},{\"name\":\"SERVICE_ACCOUNT\",\"valueFrom\":{\"fieldRef\":{\"apiVersion\":\"v1\",\"fieldPath\":\"spec.serviceAccountName\"}}},{\"name\":\"PILOT_TRACE_SAMPLING\",\"value\":\"1\"},{\"name\":\"PILOT_ENABLE_PROTOCOL_SNIFFING_FOR_OUTBOUND\",\"value\":\"true\"},{\"name\":\"PILOT_ENABLE_PROTOCOL_SNIFFING_FOR_INBOUND\",\"value\":\"true\"},{\"name\":\"INJECTION_WEBHOOK_CONFIG_NAME\",\"value\":\"istio-sidecar-injector\"},{\"name\":\"ISTIOD_ADDR\",\"value\":\"istiod.istio-system.svc:15012\"},{\"name\":\"PILOT_ENABLE_ANALYSIS\",\"value\":\"false\"},{\"name\":\"CLUSTER_ID\",\"value\":\"Kubernetes\"},{\"name\":\"CENTRAL_ISTIOD\",\"value\":\"false\"}],\"image\":\"docker.io/istio/pilot:1.6.4\",\"name\":\"discovery\",\"ports\":[{\"containerPort\":8080},{\"containerPort\":15010},{\"containerPort\":15017},{\"containerPort\":15053}],\"readinessProbe\":{\"httpGet\":{\"path\":\"/ready\",\"port\":8080},\"initialDelaySeconds\":1,\"periodSeconds\":3,\"timeoutSeconds\":5},\"resources\":{\"requests\":{\"cpu\":\"500m\",\"memory\":\"2048Mi\"}},\"securityContext\":{\"capabilities\":{\"drop\":[\"ALL\"]},\"runAsGroup\":1337,\"runAsNonRoot\":true,\"runAsUser\":1337},\"volumeMounts\":[{\"mountPath\":\"/etc/istio/config\",\"name\":\"config-volume\"},{\"mountPath\":\"/var/run/secrets/istio-dns\",\"name\":\"local-certs\"},{\"mountPath\":\"/etc/cacerts\",\"name\":\"cacerts\",\"readOnly\":true},{\"mountPath\":\"/var/lib/istio/inject\",\"name\":\"inject\",\"readOnly\":true}]}],\"securityContext\":{\"fsGroup\":1337},\"serviceAccountName\":\"istiod-service-account\",\"volumes\":[{\"emptyDir\":{\"medium\":\"Memory\"},\"name\":\"local-certs\"},{\"name\":\"cacerts\",\"secret\":{\"optional\":true,\"secretName\":\"cacerts\"}},{\"configMap\":{\"name\":\"istio-sidecar-injector\",\"optional\":true},\"name\":\"inject\"},{\"configMap\":{\"name\":\"istio\"},\"name\":\"config-volume\"}]}}}}\n"}},"spec":{"replicas":1,"selector":{"matchLabels":{"istio":"pilot"}},"template":{"metadata":{"creationTimestamp":null,"labels":{"app":"istiod","istio":"pilot","istio.io/rev":"default"},"annotations":{"sidecar.istio.io/inject":"false"}},"spec":{"volumes":[{"name":"local-certs","emptyDir":{"medium":"Memory"}},{"name":"cacerts","secret":{"secretName":"cacerts","defaultMode":420,"optional":true}},{"name":"inject","configMap":{"name":"istio-sidecar-injector","defaultMode":420,"optional":true}},{"name":"config-volume","configMap":{"name":"istio","defaultMode":420}}],"containers":[{"name":"discovery","image":"docker.io/istio/pilot:1.6.4","args":["discovery","--monitoringAddr=:15014","--log_output_level=default:info","--domain","cluster.local","--trust-domain=cluster.local","--keepaliveMaxServerConnectionAge","30m"],"ports":[{"containerPort":8080,"protocol":"TCP"},{"containerPort":15010,"protocol":"TCP"},{"containerPort":15017,"protocol":"TCP"},{"containerPort":15053,"protocol":"TCP"}],"env":[{"name":"REVISION","value":"default"},{"name":"JWT_POLICY","value":"first-party-jwt"},{"name":"PILOT_CERT_PROVIDER","value":"istiod"},{"name":"POD_NAME","valueFrom":{"fieldRef":{"apiVersion":"v1","fieldPath":"metadata.name"}}},{"name":"POD_NAMESPACE","valueFrom":{"fieldRef":{"apiVersion":"v1","fieldPath":"metadata.namespace"}}},{"name":"SERVICE_ACCOUNT","valueFrom":{"fieldRef":{"apiVersion":"v1","fieldPath":"spec.serviceAccountName"}}},{"name":"PILOT_TRACE_SAMPLING","value":"1"},{"name":"PILOT_ENABLE_PROTOCOL_SNIFFING_FOR_OUTBOUND","value":"true"},{"name":"PILOT_ENABLE_PROTOCOL_SNIFFING_FOR_INBOUND","value":"true"},{"name":"INJECTION_WEBHOOK_CONFIG_NAME","value":"istio-sidecar-injector"},{"name":"ISTIOD_ADDR","value":"istiod.istio-system.svc:15012"},{"name":"PILOT_ENABLE_ANALYSIS","value":"false"},{"name":"CLUSTER_ID","value":"Kubernetes"},{"name":"CENTRAL_ISTIOD","value":"false"}],"resources":{"requests":{"cpu":"500m","memory":"2Gi"}},"volumeMounts":[{"name":"config-volume","mountPath":"/etc/istio/config"},{"name":"local-certs","mountPath":"/var/run/secrets/istio-dns"},{"name":"cacerts","readOnly":true,"mountPath":"/etc/cacerts"},{"name":"inject","readOnly":true,"mountPath":"/var/lib/istio/inject"}],"readinessProbe":{"httpGet":{"path":"/ready","port":8080,"scheme":"HTTP"},"initialDelaySeconds":1,"timeoutSeconds":5,"periodSeconds":3,"successThreshold":1,"failureThreshold":3},"terminationMessagePath":"/dev/termination-log","terminationMessagePolicy":"File","imagePullPolicy":"IfNotPresent","securityContext":{"capabilities":{"drop":["ALL"]},"runAsUser":1337,"runAsGroup":1337,"runAsNonRoot":true}}],"restartPolicy":"Always","terminationGracePeriodSeconds":30,"dnsPolicy":"ClusterFirst","serviceAccountName":"istiod-service-account","serviceAccount":"istiod-service-account","securityContext":{"fsGroup":1337},"schedulerName":"default-scheduler"}},"strategy":{"type":"RollingUpdate","rollingUpdate":{"maxUnavailable":"25%","maxSurge":"100%"}},"revisionHistoryLimit":10,"progressDeadlineSeconds":600},"status":{"observedGeneration":1,"replicas":1,"updatedReplicas":1,"readyReplicas":1,"availableReplicas":1,"conditions":[{"type":"Progressing","status":"True","lastUpdateTime":"2020-12-01T11:26:01Z","lastTransitionTime":"2020-12-01T11:25:26Z","reason":"NewReplicaSetAvailable","message":"ReplicaSet \"istiod-59ddb865bb\" has successfully progressed."},{"type":"Available","status":"True","lastUpdateTime":"2020-12-20T17:34:05Z","lastTransitionTime":"2020-12-20T17:34:05Z","reason":"MinimumReplicasAvailable","message":"Deployment has minimum availability."}]}},{"metadata":{"name":"prometheus","namespace":"istio-system","selfLink":"/apis/apps/v1/namespaces/istio-system/deployments/prometheus","uid":"3c7e5c95-b7ea-48c1-b12e-e039090b3a6f","resourceVersion":"568300","generation":1,"creationTimestamp":"2020-12-01T11:26:03Z","labels":{"app":"prometheus","install.operator.istio.io/owning-resource":"installed-state","install.operator.istio.io/owning-resource-namespace":"istio-system","operator.istio.io/component":"AddonComponents","operator.istio.io/managed":"Reconcile","operator.istio.io/version":"1.6.4","release":"istio"},"annotations":{"deployment.kubernetes.io/revision":"1","kubectl.kubernetes.io/last-applied-configuration":"{\"apiVersion\":\"apps/v1\",\"kind\":\"Deployment\",\"metadata\":{\"annotations\":{},\"labels\":{\"app\":\"prometheus\",\"install.operator.istio.io/owning-resource\":\"installed-state\",\"install.operator.istio.io/owning-resource-namespace\":\"istio-system\",\"operator.istio.io/component\":\"AddonComponents\",\"operator.istio.io/managed\":\"Reconcile\",\"operator.istio.io/version\":\"1.6.4\",\"release\":\"istio\"},\"name\":\"prometheus\",\"namespace\":\"istio-system\"},\"spec\":{\"replicas\":1,\"selector\":{\"matchLabels\":{\"app\":\"prometheus\"}},\"template\":{\"metadata\":{\"annotations\":{\"sidecar.istio.io/inject\":\"false\"},\"labels\":{\"app\":\"prometheus\",\"release\":\"istio\"}},\"spec\":{\"affinity\":{\"nodeAffinity\":{\"preferredDuringSchedulingIgnoredDuringExecution\":[{\"preference\":{\"matchExpressions\":[{\"key\":\"beta.kubernetes.io/arch\",\"operator\":\"In\",\"values\":[\"amd64\"]}]},\"weight\":2},{\"preference\":{\"matchExpressions\":[{\"key\":\"beta.kubernetes.io/arch\",\"operator\":\"In\",\"values\":[\"ppc64le\"]}]},\"weight\":2},{\"preference\":{\"matchExpressions\":[{\"key\":\"beta.kubernetes.io/arch\",\"operator\":\"In\",\"values\":[\"s390x\"]}]},\"weight\":2}],\"requiredDuringSchedulingIgnoredDuringExecution\":{\"nodeSelectorTerms\":[{\"matchExpressions\":[{\"key\":\"beta.kubernetes.io/arch\",\"operator\":\"In\",\"values\":[\"amd64\",\"ppc64le\",\"s390x\"]}]}]}}},\"containers\":[{\"args\":[\"--storage.tsdb.retention=6h\",\"--config.file=/etc/prometheus/prometheus.yml\"],\"image\":\"docker.io/prom/prometheus:v2.15.1\",\"livenessProbe\":{\"httpGet\":{\"path\":\"/-/healthy\",\"port\":9090}},\"name\":\"prometheus\",\"ports\":[{\"containerPort\":9090,\"name\":\"http\"}],\"readinessProbe\":{\"httpGet\":{\"path\":\"/-/ready\",\"port\":9090}},\"resources\":{\"requests\":{\"cpu\":\"10m\"}},\"volumeMounts\":[{\"mountPath\":\"/etc/prometheus\",\"name\":\"config-volume\"},{\"mountPath\":\"/etc/istio-certs\",\"name\":\"istio-certs\"}]},{\"args\":[\"proxy\",\"sidecar\",\"--domain\",\"$(POD_NAMESPACE).svc.cluster.local\",\"istio-proxy-prometheus\",\"--proxyLogLevel=warning\",\"--proxyComponentLogLevel=misc:error\",\"--controlPlaneAuthPolicy\",\"NONE\",\"--trust-domain=cluster.local\"],\"env\":[{\"name\":\"OUTPUT_CERTS\",\"value\":\"/etc/istio-certs\"},{\"name\":\"JWT_POLICY\",\"value\":\"first-party-jwt\"},{\"name\":\"PILOT_CERT_PROVIDER\",\"value\":\"istiod\"},{\"name\":\"CA_ADDR\",\"value\":\"istiod.istio-system.svc:15012\"},{\"name\":\"POD_NAME\",\"valueFrom\":{\"fieldRef\":{\"fieldPath\":\"metadata.name\"}}},{\"name\":\"POD_NAMESPACE\",\"valueFrom\":{\"fieldRef\":{\"fieldPath\":\"metadata.namespace\"}}},{\"name\":\"INSTANCE_IP\",\"valueFrom\":{\"fieldRef\":{\"fieldPath\":\"status.podIP\"}}},{\"name\":\"SERVICE_ACCOUNT\",\"valueFrom\":{\"fieldRef\":{\"fieldPath\":\"spec.serviceAccountName\"}}},{\"name\":\"HOST_IP\",\"valueFrom\":{\"fieldRef\":{\"fieldPath\":\"status.hostIP\"}}},{\"name\":\"ISTIO_META_MESH_ID\",\"value\":\"cluster.local\"},{\"name\":\"ISTIO_META_CLUSTER_ID\",\"value\":\"Kubernetes\"}],\"image\":\"docker.io/istio/proxyv2:1.6.4\",\"imagePullPolicy\":\"Always\",\"name\":\"istio-proxy\",\"ports\":[{\"containerPort\":15090,\"name\":\"http-envoy-prom\",\"protocol\":\"TCP\"}],\"readinessProbe\":{\"failureThreshold\":30,\"httpGet\":{\"path\":\"/healthz/ready\",\"port\":15020,\"scheme\":\"HTTP\"},\"initialDelaySeconds\":1,\"periodSeconds\":2,\"successThreshold\":1,\"timeoutSeconds\":1},\"volumeMounts\":[{\"mountPath\":\"/var/run/secrets/istio\",\"name\":\"istiod-ca-cert\"},{\"mountPath\":\"/etc/istio/proxy\",\"name\":\"istio-envoy\"},{\"mountPath\":\"/etc/istio-certs/\",\"name\":\"istio-certs\"},{\"mountPath\":\"/etc/istio/config\",\"name\":\"istio-config-volume\"}]}],\"serviceAccountName\":\"prometheus\",\"volumes\":[{\"configMap\":{\"name\":\"istio\",\"optional\":true},\"name\":\"istio-config-volume\"},{\"configMap\":{\"name\":\"prometheus\"},\"name\":\"config-volume\"},{\"emptyDir\":{\"medium\":\"Memory\"},\"name\":\"istio-certs\"},{\"emptyDir\":{\"medium\":\"Memory\"},\"name\":\"istio-envoy\"},{\"configMap\":{\"defaultMode\":420,\"name\":\"istio-ca-root-cert\"},\"name\":\"istiod-ca-cert\"}]}}}}\n"}},"spec":{"replicas":1,"selector":{"matchLabels":{"app":"prometheus"}},"template":{"metadata":{"creationTimestamp":null,"labels":{"app":"prometheus","release":"istio"},"annotations":{"sidecar.istio.io/inject":"false"}},"spec":{"volumes":[{"name":"istio-config-volume","configMap":{"name":"istio","defaultMode":420,"optional":true}},{"name":"config-volume","configMap":{"name":"prometheus","defaultMode":420}},{"name":"istio-certs","emptyDir":{"medium":"Memory"}},{"name":"istio-envoy","emptyDir":{"medium":"Memory"}},{"name":"istiod-ca-cert","configMap":{"name":"istio-ca-root-cert","defaultMode":420}}],"containers":[{"name":"prometheus","image":"docker.io/prom/prometheus:v2.15.1","args":["--storage.tsdb.retention=6h","--config.file=/etc/prometheus/prometheus.yml"],"ports":[{"name":"http","containerPort":9090,"protocol":"TCP"}],"resources":{"requests":{"cpu":"10m"}},"volumeMounts":[{"name":"config-volume","mountPath":"/etc/prometheus"},{"name":"istio-certs","mountPath":"/etc/istio-certs"}],"livenessProbe":{"httpGet":{"path":"/-/healthy","port":9090,"scheme":"HTTP"},"timeoutSeconds":1,"periodSeconds":10,"successThreshold":1,"failureThreshold":3},"readinessProbe":{"httpGet":{"path":"/-/ready","port":9090,"scheme":"HTTP"},"timeoutSeconds":1,"periodSeconds":10,"successThreshold":1,"failureThreshold":3},"terminationMessagePath":"/dev/termination-log","terminationMessagePolicy":"File","imagePullPolicy":"IfNotPresent"},{"name":"istio-proxy","image":"docker.io/istio/proxyv2:1.6.4","args":["proxy","sidecar","--domain","$(POD_NAMESPACE).svc.cluster.local","istio-proxy-prometheus","--proxyLogLevel=warning","--proxyComponentLogLevel=misc:error","--controlPlaneAuthPolicy","NONE","--trust-domain=cluster.local"],"ports":[{"name":"http-envoy-prom","containerPort":15090,"protocol":"TCP"}],"env":[{"name":"OUTPUT_CERTS","value":"/etc/istio-certs"},{"name":"JWT_POLICY","value":"first-party-jwt"},{"name":"PILOT_CERT_PROVIDER","value":"istiod"},{"name":"CA_ADDR","value":"istiod.istio-system.svc:15012"},{"name":"POD_NAME","valueFrom":{"fieldRef":{"apiVersion":"v1","fieldPath":"metadata.name"}}},{"name":"POD_NAMESPACE","valueFrom":{"fieldRef":{"apiVersion":"v1","fieldPath":"metadata.namespace"}}},{"name":"INSTANCE_IP","valueFrom":{"fieldRef":{"apiVersion":"v1","fieldPath":"status.podIP"}}},{"name":"SERVICE_ACCOUNT","valueFrom":{"fieldRef":{"apiVersion":"v1","fieldPath":"spec.serviceAccountName"}}},{"name":"HOST_IP","valueFrom":{"fieldRef":{"apiVersion":"v1","fieldPath":"status.hostIP"}}},{"name":"ISTIO_META_MESH_ID","value":"cluster.local"},{"name":"ISTIO_META_CLUSTER_ID","value":"Kubernetes"}],"resources":{},"volumeMounts":[{"name":"istiod-ca-cert","mountPath":"/var/run/secrets/istio"},{"name":"istio-envoy","mountPath":"/etc/istio/proxy"},{"name":"istio-certs","mountPath":"/etc/istio-certs/"},{"name":"istio-config-volume","mountPath":"/etc/istio/config"}],"readinessProbe":{"httpGet":{"path":"/healthz/ready","port":15020,"scheme":"HTTP"},"initialDelaySeconds":1,"timeoutSeconds":1,"periodSeconds":2,"successThreshold":1,"failureThreshold":30},"terminationMessagePath":"/dev/termination-log","terminationMessagePolicy":"File","imagePullPolicy":"Always"}],"restartPolicy":"Always","terminationGracePeriodSeconds":30,"dnsPolicy":"ClusterFirst","serviceAccountName":"prometheus","serviceAccount":"prometheus","securityContext":{},"affinity":{"nodeAffinity":{"requiredDuringSchedulingIgnoredDuringExecution":{"nodeSelectorTerms":[{"matchExpressions":[{"key":"beta.kubernetes.io/arch","operator":"In","values":["amd64","ppc64le","s390x"]}]}]},"preferredDuringSchedulingIgnoredDuringExecution":[{"weight":2,"preference":{"matchExpressions":[{"key":"beta.kubernetes.io/arch","operator":"In","values":["amd64"]}]}},{"weight":2,"preference":{"matchExpressions":[{"key":"beta.kubernetes.io/arch","operator":"In","values":["ppc64le"]}]}},{"weight":2,"preference":{"matchExpressions":[{"key":"beta.kubernetes.io/arch","operator":"In","values":["s390x"]}]}}]}},"schedulerName":"default-scheduler"}},"strategy":{"type":"RollingUpdate","rollingUpdate":{"maxUnavailable":"25%","maxSurge":"25%"}},"revisionHistoryLimit":10,"progressDeadlineSeconds":600},"status":{"observedGeneration":1,"replicas":1,"updatedReplicas":1,"readyReplicas":1,"availableReplicas":1,"conditions":[{"type":"Progressing","status":"True","lastUpdateTime":"2020-12-01T11:26:53Z","lastTransitionTime":"2020-12-01T11:26:03Z","reason":"NewReplicaSetAvailable","message":"ReplicaSet \"prometheus-7f54ff69cd\" has successfully progressed."},{"type":"Available","status":"True","lastUpdateTime":"2020-12-20T17:34:03Z","lastTransitionTime":"2020-12-20T17:34:03Z","reason":"MinimumReplicasAvailable","message":"Deployment has minimum availability."}]}},{"metadata":{"name":"coredns","namespace":"kube-system","selfLink":"/apis/apps/v1/namespaces/kube-system/deployments/coredns","uid":"b3611447-41ac-4c2c-b5c0-9a1d44123b0e","resourceVersion":"568287","generation":1,"creationTimestamp":"2020-12-01T11:20:50Z","labels":{"k8s-app":"kube-dns"},"annotations":{"deployment.kubernetes.io/revision":"1"}},"spec":{"replicas":2,"selector":{"matchLabels":{"k8s-app":"kube-dns"}},"template":{"metadata":{"creationTimestamp":null,"labels":{"k8s-app":"kube-dns"}},"spec":{"volumes":[{"name":"config-volume","configMap":{"name":"coredns","items":[{"key":"Corefile","path":"Corefile"}],"defaultMode":420}}],"containers":[{"name":"coredns","image":"k8s.gcr.io/coredns:1.6.2","args":["-conf","/etc/coredns/Corefile"],"ports":[{"name":"dns","containerPort":53,"protocol":"UDP"},{"name":"dns-tcp","containerPort":53,"protocol":"TCP"},{"name":"metrics","containerPort":9153,"protocol":"TCP"}],"resources":{"limits":{"memory":"170Mi"},"requests":{"cpu":"100m","memory":"70Mi"}},"volumeMounts":[{"name":"config-volume","readOnly":true,"mountPath":"/etc/coredns"}],"livenessProbe":{"httpGet":{"path":"/health","port":8080,"scheme":"HTTP"},"initialDelaySeconds":60,"timeoutSeconds":5,"periodSeconds":10,"successThreshold":1,"failureThreshold":5},"readinessProbe":{"httpGet":{"path":"/ready","port":8181,"scheme":"HTTP"},"timeoutSeconds":1,"periodSeconds":10,"successThreshold":1,"failureThreshold":3},"terminationMessagePath":"/dev/termination-log","terminationMessagePolicy":"File","imagePullPolicy":"IfNotPresent","securityContext":{"capabilities":{"add":["NET_BIND_SERVICE"],"drop":["all"]},"readOnlyRootFilesystem":true,"allowPrivilegeEscalation":false}}],"restartPolicy":"Always","terminationGracePeriodSeconds":30,"dnsPolicy":"Default","nodeSelector":{"beta.kubernetes.io/os":"linux"},"serviceAccountName":"coredns","serviceAccount":"coredns","securityContext":{},"schedulerName":"default-scheduler","tolerations":[{"key":"CriticalAddonsOnly","operator":"Exists"},{"key":"node-role.kubernetes.io/master","effect":"NoSchedule"}],"priorityClassName":"system-cluster-critical"}},"strategy":{"type":"RollingUpdate","rollingUpdate":{"maxUnavailable":1,"maxSurge":"25%"}},"revisionHistoryLimit":10,"progressDeadlineSeconds":600},"status":{"observedGeneration":1,"replicas":2,"updatedReplicas":2,"readyReplicas":2,"availableReplicas":2,"conditions":[{"type":"Progressing","status":"True","lastUpdateTime":"2020-12-01T11:21:27Z","lastTransitionTime":"2020-12-01T11:21:07Z","reason":"NewReplicaSetAvailable","message":"ReplicaSet \"coredns-5644d7b6d9\" has successfully progressed."},{"type":"Available","status":"True","lastUpdateTime":"2020-12-20T17:34:02Z","lastTransitionTime":"2020-12-20T17:34:02Z","reason":"MinimumReplicasAvailable","message":"Deployment has minimum availability."}]}},{"metadata":{"name":"local-path-provisioner","namespace":"local-path-storage","selfLink":"/apis/apps/v1/namespaces/local-path-storage/deployments/local-path-provisioner","uid":"dde19750-776e-43a9-aa0e-d74ac66c0ee5","resourceVersion":"568290","generation":1,"creationTimestamp":"2020-12-01T11:20:53Z","annotations":{"deployment.kubernetes.io/revision":"1","kubectl.kubernetes.io/last-applied-configuration":"{\"apiVersion\":\"apps/v1\",\"kind\":\"Deployment\",\"metadata\":{\"annotations\":{},\"name\":\"local-path-provisioner\",\"namespace\":\"local-path-storage\"},\"spec\":{\"replicas\":1,\"selector\":{\"matchLabels\":{\"app\":\"local-path-provisioner\"}},\"template\":{\"metadata\":{\"labels\":{\"app\":\"local-path-provisioner\"}},\"spec\":{\"containers\":[{\"command\":[\"local-path-provisioner\",\"--debug\",\"start\",\"--helper-image\",\"k8s.gcr.io/debian-base:v2.0.0\",\"--config\",\"/etc/config/config.json\"],\"env\":[{\"name\":\"POD_NAMESPACE\",\"valueFrom\":{\"fieldRef\":{\"fieldPath\":\"metadata.namespace\"}}}],\"image\":\"rancher/local-path-provisioner:v0.0.12\",\"imagePullPolicy\":\"IfNotPresent\",\"name\":\"local-path-provisioner\",\"volumeMounts\":[{\"mountPath\":\"/etc/config/\",\"name\":\"config-volume\"}]}],\"nodeSelector\":{\"kubernetes.io/os\":\"linux\"},\"serviceAccountName\":\"local-path-provisioner-service-account\",\"tolerations\":[{\"effect\":\"NoSchedule\",\"key\":\"node-role.kubernetes.io/master\",\"operator\":\"Equal\"}],\"volumes\":[{\"configMap\":{\"name\":\"local-path-config\"},\"name\":\"config-volume\"}]}}}}\n"}},"spec":{"replicas":1,"selector":{"matchLabels":{"app":"local-path-provisioner"}},"template":{"metadata":{"creationTimestamp":null,"labels":{"app":"local-path-provisioner"}},"spec":{"volumes":[{"name":"config-volume","configMap":{"name":"local-path-config","defaultMode":420}}],"containers":[{"name":"local-path-provisioner","image":"rancher/local-path-provisioner:v0.0.12","command":["local-path-provisioner","--debug","start","--helper-image","k8s.gcr.io/debian-base:v2.0.0","--config","/etc/config/config.json"],"env":[{"name":"POD_NAMESPACE","valueFrom":{"fieldRef":{"apiVersion":"v1","fieldPath":"metadata.namespace"}}}],"resources":{},"volumeMounts":[{"name":"config-volume","mountPath":"/etc/config/"}],"terminationMessagePath":"/dev/termination-log","terminationMessagePolicy":"File","imagePullPolicy":"IfNotPresent"}],"restartPolicy":"Always","terminationGracePeriodSeconds":30,"dnsPolicy":"ClusterFirst","nodeSelector":{"kubernetes.io/os":"linux"},"serviceAccountName":"local-path-provisioner-service-account","serviceAccount":"local-path-provisioner-service-account","securityContext":{},"schedulerName":"default-scheduler","tolerations":[{"key":"node-role.kubernetes.io/master","operator":"Equal","effect":"NoSchedule"}]}},"strategy":{"type":"RollingUpdate","rollingUpdate":{"maxUnavailable":"25%","maxSurge":"25%"}},"revisionHistoryLimit":10,"progressDeadlineSeconds":600},"status":{"observedGeneration":1,"replicas":1,"updatedReplicas":1,"readyReplicas":1,"availableReplicas":1,"conditions":[{"type":"Progressing","status":"True","lastUpdateTime":"2020-12-01T11:21:24Z","lastTransitionTime":"2020-12-01T11:21:07Z","reason":"NewReplicaSetAvailable","message":"ReplicaSet \"local-path-provisioner-58f6947c7\" has successfully progressed."},{"type":"Available","status":"True","lastUpdateTime":"2020-12-20T17:34:02Z","lastTransitionTime":"2020-12-20T17:34:02Z","reason":"MinimumReplicasAvailable","message":"Deployment has minimum availability."}]}},{"metadata":{"name":"policy-management-api","namespace":"platform","selfLink":"/apis/apps/v1/namespaces/platform/deployments/policy-management-api","uid":"4738fe42-98c8-42c8-98ba-36b6074ea8d3","resourceVersion":"574776","generation":2,"creationTimestamp":"2020-12-01T11:40:07Z","labels":{"app":"policy-management-api","kapp.k14s.io/app":"1606822795158432000","kapp.k14s.io/association":"v1.4f1457198283b2e54ae5ea24025c71ee"},"annotations":{"deployment.kubernetes.io/revision":"1","kapp.k14s.io/identity":"v1;platform/apps/Deployment/policy-management-api;apps/v1","kapp.k14s.io/original":"{\"apiVersion\":\"apps/v1\",\"kind\":\"Deployment\",\"metadata\":{\"annotations\":{\"deployment.kubernetes.io/revision\":\"1\",\"kubectl.kubernetes.io/last-applied-configuration\":\"{\\\"apiVersion\\\":\\\"apps/v1\\\",\\\"kind\\\":\\\"Deployment\\\",\\\"metadata\\\":{\\\"annotations\\\":{},\\\"labels\\\":{\\\"app\\\":\\\"policy-management-api\\\"},\\\"name\\\":\\\"policy-management-api\\\",\\\"namespace\\\":\\\"platform\\\"},\\\"spec\\\":{\\\"replicas\\\":3,\\\"revisionHistoryLimit\\\":5,\\\"selector\\\":{\\\"matchLabels\\\":{\\\"app\\\":\\\"policy-management-api\\\"}},\\\"strategy\\\":{\\\"rollingUpdate\\\":{\\\"maxSurge\\\":1,\\\"maxUnavailable\\\":0},\\\"type\\\":\\\"RollingUpdate\\\"},\\\"template\\\":{\\\"metadata\\\":{\\\"labels\\\":{\\\"app\\\":\\\"policy-management-api\\\"}},\\\"spec\\\":{\\\"containers\\\":[{\\\"args\\\":[\\\"-config-file-path=/etc/config/config.yaml\\\",\\\"-server-read-timeout=5\\\",\\\"-server-write-timeout=5\\\"],\\\"env\\\":[{\\\"name\\\":\\\"PLATFORM_POLICY_PATH\\\",\\\"value\\\":\\\"platform/opa/policies/common\\\"},{\\\"name\\\":\\\"CONSUL_HTTP_TOKEN\\\",\\\"valueFrom\\\":{\\\"secretKeyRef\\\":{\\\"key\\\":\\\"consul.token\\\",\\\"name\\\":\\\"policy-management-api-secret-h9k5fkc88k\\\"}}}],\\\"image\\\":\\\"sfrontregistry.trendyol.com/policy-management-api:40bc645f\\\",\\\"imagePullPolicy\\\":\\\"IfNotPresent\\\",\\\"livenessProbe\\\":{\\\"failureThreshold\\\":3,\\\"httpGet\\\":{\\\"path\\\":\\\"/v1/health/livez\\\",\\\"port\\\":\\\"http\\\",\\\"scheme\\\":\\\"HTTP\\\"},\\\"initialDelaySeconds\\\":5,\\\"periodSeconds\\\":1,\\\"successThreshold\\\":1,\\\"timeoutSeconds\\\":1},\\\"name\\\":\\\"policy-management-api\\\",\\\"ports\\\":[{\\\"containerPort\\\":8080,\\\"name\\\":\\\"http\\\",\\\"protocol\\\":\\\"TCP\\\"}],\\\"readinessProbe\\\":{\\\"failureThreshold\\\":3,\\\"httpGet\\\":{\\\"path\\\":\\\"/v1/health/readyz\\\",\\\"port\\\":\\\"http\\\",\\\"scheme\\\":\\\"HTTP\\\"},\\\"initialDelaySeconds\\\":5,\\\"periodSeconds\\\":1,\\\"successThreshold\\\":1,\\\"timeoutSeconds\\\":1},\\\"resources\\\":{\\\"limits\\\":{\\\"cpu\\\":\\\"200m\\\",\\\"memory\\\":\\\"128Mi\\\"},\\\"requests\\\":{\\\"cpu\\\":\\\"100m\\\",\\\"memory\\\":\\\"64Mi\\\"}},\\\"volumeMounts\\\":[{\\\"mountPath\\\":\\\"/etc/config\\\",\\\"name\\\":\\\"policy-management-api-config-volume\\\"}]}],\\\"imagePullSecrets\\\":[{\\\"name\\\":\\\"policy-management-api-regcred\\\"}],\\\"volumes\\\":[{\\\"configMap\\\":{\\\"name\\\":\\\"policy-management-api-config\\\"},\\\"name\\\":\\\"policy-management-api-config-volume\\\"}]}}}}\\n\"},\"creationTimestamp\":null,\"generation\":1,\"labels\":{\"app\":\"policy-management-api\",\"kapp.k14s.io/app\":\"1606822795158432000\",\"kapp.k14s.io/association\":\"v1.4f1457198283b2e54ae5ea24025c71ee\"},\"name\":\"policy-management-api\",\"namespace\":\"platform\",\"selfLink\":\"/apis/apps/v1/namespaces/platform/deployments/policy-management-api\"},\"spec\":{\"progressDeadlineSeconds\":600,\"replicas\":3,\"revisionHistoryLimit\":5,\"selector\":{\"matchLabels\":{\"app\":\"policy-management-api\",\"kapp.k14s.io/app\":\"1606822795158432000\"}},\"strategy\":{\"rollingUpdate\":{\"maxSurge\":1,\"maxUnavailable\":0},\"type\":\"RollingUpdate\"},\"template\":{\"metadata\":{\"creationTimestamp\":null,\"labels\":{\"app\":\"policy-management-api\",\"kapp.k14s.io/app\":\"1606822795158432000\",\"kapp.k14s.io/association\":\"v1.4f1457198283b2e54ae5ea24025c71ee\"}},\"spec\":{\"containers\":[{\"args\":[\"-config-file-path=/etc/config/config.yaml\",\"-server-read-timeout=5\",\"-server-write-timeout=5\"],\"env\":[{\"name\":\"PLATFORM_POLICY_PATH\",\"value\":\"platform/opa/policies/common\"},{\"name\":\"CONSUL_HTTP_TOKEN\",\"valueFrom\":{\"secretKeyRef\":{\"key\":\"consul.token\",\"name\":\"policy-management-api-secret-h9k5fkc88k\"}}}],\"image\":\"sfrontregistry.trendyol.com/policy-management-api:40bc645f\",\"imagePullPolicy\":\"IfNotPresent\",\"livenessProbe\":{\"failureThreshold\":3,\"httpGet\":{\"path\":\"/v1/health/livez\",\"port\":\"http\",\"scheme\":\"HTTP\"},\"initialDelaySeconds\":5,\"periodSeconds\":1,\"successThreshold\":1,\"timeoutSeconds\":1},\"name\":\"policy-management-api\",\"ports\":[{\"containerPort\":8080,\"name\":\"http\",\"protocol\":\"TCP\"}],\"readinessProbe\":{\"failureThreshold\":3,\"httpGet\":{\"path\":\"/v1/health/readyz\",\"port\":\"http\",\"scheme\":\"HTTP\"},\"initialDelaySeconds\":5,\"periodSeconds\":1,\"successThreshold\":1,\"timeoutSeconds\":1},\"resources\":{\"limits\":{\"cpu\":\"200m\",\"memory\":\"128Mi\"},\"requests\":{\"cpu\":\"100m\",\"memory\":\"64Mi\"}},\"terminationMessagePath\":\"/dev/termination-log\",\"terminationMessagePolicy\":\"File\",\"volumeMounts\":[{\"mountPath\":\"/etc/config\",\"name\":\"policy-management-api-config-volume\"}]}],\"dnsPolicy\":\"ClusterFirst\",\"imagePullSecrets\":[{\"name\":\"policy-management-api-regcred\"}],\"restartPolicy\":\"Always\",\"schedulerName\":\"default-scheduler\",\"securityContext\":{},\"terminationGracePeriodSeconds\":30,\"volumes\":[{\"configMap\":{\"defaultMode\":420,\"name\":\"policy-management-api-config\"},\"name\":\"policy-management-api-config-volume\"}]}}},\"status\":{}}","kapp.k14s.io/original-diff-md5":"57f72c514d76878037ba1a0acc47c6cf","kubectl.kubernetes.io/last-applied-configuration":"{\"apiVersion\":\"apps/v1\",\"kind\":\"Deployment\",\"metadata\":{\"annotations\":{},\"labels\":{\"app\":\"policy-management-api\"},\"name\":\"policy-management-api\",\"namespace\":\"platform\"},\"spec\":{\"replicas\":3,\"revisionHistoryLimit\":5,\"selector\":{\"matchLabels\":{\"app\":\"policy-management-api\"}},\"strategy\":{\"rollingUpdate\":{\"maxSurge\":1,\"maxUnavailable\":0},\"type\":\"RollingUpdate\"},\"template\":{\"metadata\":{\"labels\":{\"app\":\"policy-management-api\"}},\"spec\":{\"containers\":[{\"args\":[\"-config-file-path=/etc/config/config.yaml\",\"-server-read-timeout=5\",\"-server-write-timeout=5\"],\"env\":[{\"name\":\"PLATFORM_POLICY_PATH\",\"value\":\"platform/opa/policies/common\"},{\"name\":\"CONSUL_HTTP_TOKEN\",\"valueFrom\":{\"secretKeyRef\":{\"key\":\"consul.token\",\"name\":\"policy-management-api-secret-h9k5fkc88k\"}}}],\"image\":\"sfrontregistry.trendyol.com/policy-management-api:40bc645f\",\"imagePullPolicy\":\"IfNotPresent\",\"livenessProbe\":{\"failureThreshold\":3,\"httpGet\":{\"path\":\"/v1/health/livez\",\"port\":\"http\",\"scheme\":\"HTTP\"},\"initialDelaySeconds\":5,\"periodSeconds\":1,\"successThreshold\":1,\"timeoutSeconds\":1},\"name\":\"policy-management-api\",\"ports\":[{\"containerPort\":8080,\"name\":\"http\",\"protocol\":\"TCP\"}],\"readinessProbe\":{\"failureThreshold\":3,\"httpGet\":{\"path\":\"/v1/health/readyz\",\"port\":\"http\",\"scheme\":\"HTTP\"},\"initialDelaySeconds\":5,\"periodSeconds\":1,\"successThreshold\":1,\"timeoutSeconds\":1},\"resources\":{\"limits\":{\"cpu\":\"200m\",\"memory\":\"128Mi\"},\"requests\":{\"cpu\":\"100m\",\"memory\":\"64Mi\"}},\"volumeMounts\":[{\"mountPath\":\"/etc/config\",\"name\":\"policy-management-api-config-volume\"}]}],\"imagePullSecrets\":[{\"name\":\"policy-management-api-regcred\"}],\"volumes\":[{\"configMap\":{\"name\":\"policy-management-api-config\"},\"name\":\"policy-management-api-config-volume\"}]}}}}\n"}},"spec":{"replicas":3,"selector":{"matchLabels":{"app":"policy-management-api","kapp.k14s.io/app":"1606822795158432000"}},"template":{"metadata":{"creationTimestamp":null,"labels":{"app":"policy-management-api","kapp.k14s.io/app":"1606822795158432000","kapp.k14s.io/association":"v1.4f1457198283b2e54ae5ea24025c71ee"}},"spec":{"volumes":[{"name":"policy-management-api-config-volume","configMap":{"name":"policy-management-api-config","defaultMode":420}}],"containers":[{"name":"policy-management-api","image":"sfrontregistry.trendyol.com/policy-management-api:40bc645f","args":["-config-file-path=/etc/config/config.yaml","-server-read-timeout=5","-server-write-timeout=5"],"ports":[{"name":"http","containerPort":8080,"protocol":"TCP"}],"env":[{"name":"PLATFORM_POLICY_PATH","value":"platform/opa/policies/common"},{"name":"CONSUL_HTTP_TOKEN","valueFrom":{"secretKeyRef":{"name":"policy-management-api-secret-h9k5fkc88k","key":"consul.token"}}}],"resources":{"limits":{"cpu":"200m","memory":"128Mi"},"requests":{"cpu":"100m","memory":"64Mi"}},"volumeMounts":[{"name":"policy-management-api-config-volume","mountPath":"/etc/config"}],"livenessProbe":{"httpGet":{"path":"/v1/health/livez","port":"http","scheme":"HTTP"},"initialDelaySeconds":5,"timeoutSeconds":1,"periodSeconds":1,"successThreshold":1,"failureThreshold":3},"readinessProbe":{"httpGet":{"path":"/v1/health/readyz","port":"http","scheme":"HTTP"},"initialDelaySeconds":5,"timeoutSeconds":1,"periodSeconds":1,"successThreshold":1,"failureThreshold":3},"terminationMessagePath":"/dev/termination-log","terminationMessagePolicy":"File","imagePullPolicy":"IfNotPresent"}],"restartPolicy":"Always","terminationGracePeriodSeconds":30,"dnsPolicy":"ClusterFirst","securityContext":{},"imagePullSecrets":[{"name":"policy-management-api-regcred"}],"schedulerName":"default-scheduler"}},"strategy":{"type":"RollingUpdate","rollingUpdate":{"maxUnavailable":0,"maxSurge":1}},"revisionHistoryLimit":5,"progressDeadlineSeconds":600},"status":{"observedGeneration":2,"replicas":3,"updatedReplicas":3,"readyReplicas":3,"availableReplicas":3,"conditions":[{"type":"Progressing","status":"True","lastUpdateTime":"2020-12-01T11:41:58Z","lastTransitionTime":"2020-12-01T11:40:07Z","reason":"NewReplicaSetAvailable","message":"ReplicaSet \"policy-management-api-b85d9575f\" has successfully progressed."},{"type":"Available","status":"True","lastUpdateTime":"2020-12-20T18:47:14Z","lastTransitionTime":"2020-12-20T18:47:14Z","reason":"MinimumReplicasAvailable","message":"Deployment has minimum availability."}]}}]}
+{
+  "kind-local": [
+    {
+      "metadata": {
+        "name": "nginx",
+        "namespace": "default",
+        "selfLink": "/apis/apps/v1/namespaces/default/deployments/nginx",
+        "uid": "5d6967ae-2e92-426b-8c96-59d03a9c3ccf",
+        "resourceVersion": "568275",
+        "generation": 8,
+        "creationTimestamp": "2020-12-01T11:54:43Z",
+        "labels": {
+          "app": "nginx"
+        },
+        "annotations": {
+          "deployment.kubernetes.io/revision": "2"
+        }
+      },
+      "spec": {
+        "replicas": 1,
+        "selector": {
+          "matchLabels": {
+            "app": "nginx"
+          }
+        },
+        "template": {
+          "metadata": {
+            "creationTimestamp": null,
+            "labels": {
+              "app": "nginx"
+            },
+            "annotations": {
+              "authz.trendyol.com/inject": "true"
+            }
+          },
+          "spec": {
+            "containers": [
+              {
+                "name": "nginx",
+                "image": "nginx",
+                "resources": {},
+                "terminationMessagePath": "/dev/termination-log",
+                "terminationMessagePolicy": "File",
+                "imagePullPolicy": "Always"
+              }
+            ],
+            "restartPolicy": "Always",
+            "terminationGracePeriodSeconds": 30,
+            "dnsPolicy": "ClusterFirst",
+            "securityContext": {},
+            "schedulerName": "default-scheduler"
+          }
+        },
+        "strategy": {
+          "type": "RollingUpdate",
+          "rollingUpdate": {
+            "maxUnavailable": "25%",
+            "maxSurge": "25%"
+          }
+        },
+        "revisionHistoryLimit": 10,
+        "progressDeadlineSeconds": 600
+      },
+      "status": {
+        "observedGeneration": 8,
+        "replicas": 1,
+        "updatedReplicas": 1,
+        "readyReplicas": 1,
+        "availableReplicas": 1,
+        "conditions": [
+          {
+            "type": "Progressing",
+            "status": "True",
+            "lastUpdateTime": "2020-12-15T07:46:49Z",
+            "lastTransitionTime": "2020-12-01T11:54:43Z",
+            "reason": "NewReplicaSetAvailable",
+            "message": "ReplicaSet \"nginx-8449bfbf96\" has successfully progressed."
+          },
+          {
+            "type": "Available",
+            "status": "True",
+            "lastUpdateTime": "2020-12-20T17:34:02Z",
+            "lastTransitionTime": "2020-12-20T17:34:02Z",
+            "reason": "MinimumReplicasAvailable",
+            "message": "Deployment has minimum availability."
+          }
+        ]
+      }
+    },
+    {
+      "metadata": {
+        "name": "nginx2",
+        "namespace": "default",
+        "selfLink": "/apis/apps/v1/namespaces/default/deployments/nginx2",
+        "uid": "39bf519a-68c9-447c-a44f-f9e330abe7cf",
+        "resourceVersion": "568315",
+        "generation": 1,
+        "creationTimestamp": "2020-12-01T12:19:19Z",
+        "labels": {
+          "app": "nginx2"
+        },
+        "annotations": {
+          "deployment.kubernetes.io/revision": "1"
+        }
+      },
+      "spec": {
+        "replicas": 1,
+        "selector": {
+          "matchLabels": {
+            "app": "nginx2"
+          }
+        },
+        "template": {
+          "metadata": {
+            "creationTimestamp": null,
+            "labels": {
+              "app": "nginx2"
+            }
+          },
+          "spec": {
+            "containers": [
+              {
+                "name": "nginx",
+                "image": "nginx",
+                "resources": {},
+                "terminationMessagePath": "/dev/termination-log",
+                "terminationMessagePolicy": "File",
+                "imagePullPolicy": "Always"
+              }
+            ],
+            "restartPolicy": "Always",
+            "terminationGracePeriodSeconds": 30,
+            "dnsPolicy": "ClusterFirst",
+            "securityContext": {},
+            "schedulerName": "default-scheduler"
+          }
+        },
+        "strategy": {
+          "type": "RollingUpdate",
+          "rollingUpdate": {
+            "maxUnavailable": "25%",
+            "maxSurge": "25%"
+          }
+        },
+        "revisionHistoryLimit": 10,
+        "progressDeadlineSeconds": 600
+      },
+      "status": {
+        "observedGeneration": 1,
+        "replicas": 1,
+        "updatedReplicas": 1,
+        "readyReplicas": 1,
+        "availableReplicas": 1,
+        "conditions": [
+          {
+            "type": "Progressing",
+            "status": "True",
+            "lastUpdateTime": "2020-12-01T12:37:29Z",
+            "lastTransitionTime": "2020-12-01T12:19:19Z",
+            "reason": "NewReplicaSetAvailable",
+            "message": "ReplicaSet \"nginx2-c74d46595\" has successfully progressed."
+          },
+          {
+            "type": "Available",
+            "status": "True",
+            "lastUpdateTime": "2020-12-20T17:34:05Z",
+            "lastTransitionTime": "2020-12-20T17:34:05Z",
+            "reason": "MinimumReplicasAvailable",
+            "message": "Deployment has minimum availability."
+          }
+        ]
+      }
+    },
+    {
+      "metadata": {
+        "name": "istio-ingressgateway",
+        "namespace": "istio-system",
+        "selfLink": "/apis/apps/v1/namespaces/istio-system/deployments/istio-ingressgateway",
+        "uid": "5b15a66f-47ed-4238-a6aa-9e0625a4019a",
+        "resourceVersion": "568296",
+        "generation": 1,
+        "creationTimestamp": "2020-12-01T11:26:03Z",
+        "labels": {
+          "app": "istio-ingressgateway",
+          "install.operator.istio.io/owning-resource": "installed-state",
+          "install.operator.istio.io/owning-resource-namespace": "istio-system",
+          "istio": "ingressgateway",
+          "operator.istio.io/component": "IngressGateways",
+          "operator.istio.io/managed": "Reconcile",
+          "operator.istio.io/version": "1.6.4",
+          "release": "istio"
+        },
+        "annotations": {
+          "deployment.kubernetes.io/revision": "1",
+          "kubectl.kubernetes.io/last-applied-configuration": "{\"apiVersion\":\"apps/v1\",\"kind\":\"Deployment\",\"metadata\":{\"annotations\":{},\"labels\":{\"app\":\"istio-ingressgateway\",\"install.operator.istio.io/owning-resource\":\"installed-state\",\"install.operator.istio.io/owning-resource-namespace\":\"istio-system\",\"istio\":\"ingressgateway\",\"operator.istio.io/component\":\"IngressGateways\",\"operator.istio.io/managed\":\"Reconcile\",\"operator.istio.io/version\":\"1.6.4\",\"release\":\"istio\"},\"name\":\"istio-ingressgateway\",\"namespace\":\"istio-system\"},\"spec\":{\"selector\":{\"matchLabels\":{\"app\":\"istio-ingressgateway\",\"istio\":\"ingressgateway\"}},\"strategy\":{\"rollingUpdate\":{\"maxSurge\":\"100%\",\"maxUnavailable\":\"25%\"}},\"template\":{\"metadata\":{\"annotations\":{\"sidecar.istio.io/inject\":\"false\"},\"labels\":{\"app\":\"istio-ingressgateway\",\"chart\":\"gateways\",\"heritage\":\"Tiller\",\"istio\":\"ingressgateway\",\"release\":\"istio\",\"service.istio.io/canonical-name\":\"istio-ingressgateway\",\"service.istio.io/canonical-revision\":\"latest\"}},\"spec\":{\"affinity\":{\"nodeAffinity\":{\"preferredDuringSchedulingIgnoredDuringExecution\":[{\"preference\":{\"matchExpressions\":[{\"key\":\"beta.kubernetes.io/arch\",\"operator\":\"In\",\"values\":[\"amd64\"]}]},\"weight\":2},{\"preference\":{\"matchExpressions\":[{\"key\":\"beta.kubernetes.io/arch\",\"operator\":\"In\",\"values\":[\"ppc64le\"]}]},\"weight\":2},{\"preference\":{\"matchExpressions\":[{\"key\":\"beta.kubernetes.io/arch\",\"operator\":\"In\",\"values\":[\"s390x\"]}]},\"weight\":2}],\"requiredDuringSchedulingIgnoredDuringExecution\":{\"nodeSelectorTerms\":[{\"matchExpressions\":[{\"key\":\"beta.kubernetes.io/arch\",\"operator\":\"In\",\"values\":[\"amd64\",\"ppc64le\",\"s390x\"]}]}]}}},\"containers\":[{\"args\":[\"proxy\",\"router\",\"--domain\",\"$(POD_NAMESPACE).svc.cluster.local\",\"--proxyLogLevel=warning\",\"--proxyComponentLogLevel=misc:error\",\"--log_output_level=default:info\",\"--serviceCluster\",\"istio-ingressgateway\",\"--trust-domain=cluster.local\"],\"env\":[{\"name\":\"JWT_POLICY\",\"value\":\"first-party-jwt\"},{\"name\":\"PILOT_CERT_PROVIDER\",\"value\":\"istiod\"},{\"name\":\"CA_ADDR\",\"value\":\"istiod.istio-system.svc:15012\"},{\"name\":\"NODE_NAME\",\"valueFrom\":{\"fieldRef\":{\"apiVersion\":\"v1\",\"fieldPath\":\"spec.nodeName\"}}},{\"name\":\"POD_NAME\",\"valueFrom\":{\"fieldRef\":{\"apiVersion\":\"v1\",\"fieldPath\":\"metadata.name\"}}},{\"name\":\"POD_NAMESPACE\",\"valueFrom\":{\"fieldRef\":{\"apiVersion\":\"v1\",\"fieldPath\":\"metadata.namespace\"}}},{\"name\":\"INSTANCE_IP\",\"valueFrom\":{\"fieldRef\":{\"apiVersion\":\"v1\",\"fieldPath\":\"status.podIP\"}}},{\"name\":\"HOST_IP\",\"valueFrom\":{\"fieldRef\":{\"apiVersion\":\"v1\",\"fieldPath\":\"status.hostIP\"}}},{\"name\":\"SERVICE_ACCOUNT\",\"valueFrom\":{\"fieldRef\":{\"fieldPath\":\"spec.serviceAccountName\"}}},{\"name\":\"CANONICAL_SERVICE\",\"valueFrom\":{\"fieldRef\":{\"fieldPath\":\"metadata.labels['service.istio.io/canonical-name']\"}}},{\"name\":\"CANONICAL_REVISION\",\"valueFrom\":{\"fieldRef\":{\"fieldPath\":\"metadata.labels['service.istio.io/canonical-revision']\"}}},{\"name\":\"ISTIO_META_WORKLOAD_NAME\",\"value\":\"istio-ingressgateway\"},{\"name\":\"ISTIO_META_OWNER\",\"value\":\"kubernetes://apis/apps/v1/namespaces/istio-system/deployments/istio-ingressgateway\"},{\"name\":\"ISTIO_META_MESH_ID\",\"value\":\"cluster.local\"},{\"name\":\"ISTIO_META_ROUTER_MODE\",\"value\":\"sni-dnat\"},{\"name\":\"ISTIO_META_CLUSTER_ID\",\"value\":\"Kubernetes\"}],\"image\":\"docker.io/istio/proxyv2:1.6.4\",\"name\":\"istio-proxy\",\"ports\":[{\"containerPort\":15021},{\"containerPort\":8080},{\"containerPort\":8443},{\"containerPort\":15443},{\"containerPort\":15011},{\"containerPort\":15012},{\"containerPort\":8060},{\"containerPort\":853},{\"containerPort\":15090,\"name\":\"http-envoy-prom\",\"protocol\":\"TCP\"}],\"readinessProbe\":{\"failureThreshold\":30,\"httpGet\":{\"path\":\"/healthz/ready\",\"port\":15021,\"scheme\":\"HTTP\"},\"initialDelaySeconds\":1,\"periodSeconds\":2,\"successThreshold\":1,\"timeoutSeconds\":1},\"resources\":{\"limits\":{\"cpu\":\"2000m\",\"memory\":\"1024Mi\"},\"requests\":{\"cpu\":\"100m\",\"memory\":\"128Mi\"}},\"volumeMounts\":[{\"mountPath\":\"/etc/istio/proxy\",\"name\":\"istio-envoy\"},{\"mountPath\":\"/etc/istio/config\",\"name\":\"config-volume\"},{\"mountPath\":\"/var/run/secrets/istio\",\"name\":\"istiod-ca-cert\"},{\"mountPath\":\"/var/run/ingress_gateway\",\"name\":\"ingressgatewaysdsudspath\"},{\"mountPath\":\"/etc/istio/pod\",\"name\":\"podinfo\"},{\"mountPath\":\"/etc/istio/ingressgateway-certs\",\"name\":\"ingressgateway-certs\",\"readOnly\":true},{\"mountPath\":\"/etc/istio/ingressgateway-ca-certs\",\"name\":\"ingressgateway-ca-certs\",\"readOnly\":true}]}],\"serviceAccountName\":\"istio-ingressgateway-service-account\",\"volumes\":[{\"configMap\":{\"name\":\"istio-ca-root-cert\"},\"name\":\"istiod-ca-cert\"},{\"downwardAPI\":{\"items\":[{\"fieldRef\":{\"fieldPath\":\"metadata.labels\"},\"path\":\"labels\"},{\"fieldRef\":{\"fieldPath\":\"metadata.annotations\"},\"path\":\"annotations\"}]},\"name\":\"podinfo\"},{\"emptyDir\":{},\"name\":\"istio-envoy\"},{\"emptyDir\":{},\"name\":\"ingressgatewaysdsudspath\"},{\"configMap\":{\"name\":\"istio\",\"optional\":true},\"name\":\"config-volume\"},{\"name\":\"ingressgateway-certs\",\"secret\":{\"optional\":true,\"secretName\":\"istio-ingressgateway-certs\"}},{\"name\":\"ingressgateway-ca-certs\",\"secret\":{\"optional\":true,\"secretName\":\"istio-ingressgateway-ca-certs\"}}]}}}}\n"
+        }
+      },
+      "spec": {
+        "replicas": 1,
+        "selector": {
+          "matchLabels": {
+            "app": "istio-ingressgateway",
+            "istio": "ingressgateway"
+          }
+        },
+        "template": {
+          "metadata": {
+            "creationTimestamp": null,
+            "labels": {
+              "app": "istio-ingressgateway",
+              "chart": "gateways",
+              "heritage": "Tiller",
+              "istio": "ingressgateway",
+              "release": "istio",
+              "service.istio.io/canonical-name": "istio-ingressgateway",
+              "service.istio.io/canonical-revision": "latest"
+            },
+            "annotations": {
+              "sidecar.istio.io/inject": "false"
+            }
+          },
+          "spec": {
+            "volumes": [
+              {
+                "name": "istiod-ca-cert",
+                "configMap": {
+                  "name": "istio-ca-root-cert",
+                  "defaultMode": 420
+                }
+              },
+              {
+                "name": "podinfo",
+                "downwardAPI": {
+                  "items": [
+                    {
+                      "path": "labels",
+                      "fieldRef": {
+                        "apiVersion": "v1",
+                        "fieldPath": "metadata.labels"
+                      }
+                    },
+                    {
+                      "path": "annotations",
+                      "fieldRef": {
+                        "apiVersion": "v1",
+                        "fieldPath": "metadata.annotations"
+                      }
+                    }
+                  ],
+                  "defaultMode": 420
+                }
+              },
+              {
+                "name": "istio-envoy",
+                "emptyDir": {}
+              },
+              {
+                "name": "ingressgatewaysdsudspath",
+                "emptyDir": {}
+              },
+              {
+                "name": "config-volume",
+                "configMap": {
+                  "name": "istio",
+                  "defaultMode": 420,
+                  "optional": true
+                }
+              },
+              {
+                "name": "ingressgateway-certs",
+                "secret": {
+                  "secretName": "istio-ingressgateway-certs",
+                  "defaultMode": 420,
+                  "optional": true
+                }
+              },
+              {
+                "name": "ingressgateway-ca-certs",
+                "secret": {
+                  "secretName": "istio-ingressgateway-ca-certs",
+                  "defaultMode": 420,
+                  "optional": true
+                }
+              }
+            ],
+            "containers": [
+              {
+                "name": "istio-proxy",
+                "image": "docker.io/istio/proxyv2:1.6.4",
+                "args": [
+                  "proxy",
+                  "router",
+                  "--domain",
+                  "$(POD_NAMESPACE).svc.cluster.local",
+                  "--proxyLogLevel=warning",
+                  "--proxyComponentLogLevel=misc:error",
+                  "--log_output_level=default:info",
+                  "--serviceCluster",
+                  "istio-ingressgateway",
+                  "--trust-domain=cluster.local"
+                ],
+                "ports": [
+                  {
+                    "containerPort": 15021,
+                    "protocol": "TCP"
+                  },
+                  {
+                    "containerPort": 8080,
+                    "protocol": "TCP"
+                  },
+                  {
+                    "containerPort": 8443,
+                    "protocol": "TCP"
+                  },
+                  {
+                    "containerPort": 15443,
+                    "protocol": "TCP"
+                  },
+                  {
+                    "containerPort": 15011,
+                    "protocol": "TCP"
+                  },
+                  {
+                    "containerPort": 15012,
+                    "protocol": "TCP"
+                  },
+                  {
+                    "containerPort": 8060,
+                    "protocol": "TCP"
+                  },
+                  {
+                    "containerPort": 853,
+                    "protocol": "TCP"
+                  },
+                  {
+                    "name": "http-envoy-prom",
+                    "containerPort": 15090,
+                    "protocol": "TCP"
+                  }
+                ],
+                "env": [
+                  {
+                    "name": "JWT_POLICY",
+                    "value": "first-party-jwt"
+                  },
+                  {
+                    "name": "PILOT_CERT_PROVIDER",
+                    "value": "istiod"
+                  },
+                  {
+                    "name": "CA_ADDR",
+                    "value": "istiod.istio-system.svc:15012"
+                  },
+                  {
+                    "name": "NODE_NAME",
+                    "valueFrom": {
+                      "fieldRef": {
+                        "apiVersion": "v1",
+                        "fieldPath": "spec.nodeName"
+                      }
+                    }
+                  },
+                  {
+                    "name": "POD_NAME",
+                    "valueFrom": {
+                      "fieldRef": {
+                        "apiVersion": "v1",
+                        "fieldPath": "metadata.name"
+                      }
+                    }
+                  },
+                  {
+                    "name": "POD_NAMESPACE",
+                    "valueFrom": {
+                      "fieldRef": {
+                        "apiVersion": "v1",
+                        "fieldPath": "metadata.namespace"
+                      }
+                    }
+                  },
+                  {
+                    "name": "INSTANCE_IP",
+                    "valueFrom": {
+                      "fieldRef": {
+                        "apiVersion": "v1",
+                        "fieldPath": "status.podIP"
+                      }
+                    }
+                  },
+                  {
+                    "name": "HOST_IP",
+                    "valueFrom": {
+                      "fieldRef": {
+                        "apiVersion": "v1",
+                        "fieldPath": "status.hostIP"
+                      }
+                    }
+                  },
+                  {
+                    "name": "SERVICE_ACCOUNT",
+                    "valueFrom": {
+                      "fieldRef": {
+                        "apiVersion": "v1",
+                        "fieldPath": "spec.serviceAccountName"
+                      }
+                    }
+                  },
+                  {
+                    "name": "CANONICAL_SERVICE",
+                    "valueFrom": {
+                      "fieldRef": {
+                        "apiVersion": "v1",
+                        "fieldPath": "metadata.labels['service.istio.io/canonical-name']"
+                      }
+                    }
+                  },
+                  {
+                    "name": "CANONICAL_REVISION",
+                    "valueFrom": {
+                      "fieldRef": {
+                        "apiVersion": "v1",
+                        "fieldPath": "metadata.labels['service.istio.io/canonical-revision']"
+                      }
+                    }
+                  },
+                  {
+                    "name": "ISTIO_META_WORKLOAD_NAME",
+                    "value": "istio-ingressgateway"
+                  },
+                  {
+                    "name": "ISTIO_META_OWNER",
+                    "value": "kubernetes://apis/apps/v1/namespaces/istio-system/deployments/istio-ingressgateway"
+                  },
+                  {
+                    "name": "ISTIO_META_MESH_ID",
+                    "value": "cluster.local"
+                  },
+                  {
+                    "name": "ISTIO_META_ROUTER_MODE",
+                    "value": "sni-dnat"
+                  },
+                  {
+                    "name": "ISTIO_META_CLUSTER_ID",
+                    "value": "Kubernetes"
+                  }
+                ],
+                "resources": {
+                  "limits": {
+                    "cpu": "2",
+                    "memory": "1Gi"
+                  },
+                  "requests": {
+                    "cpu": "100m",
+                    "memory": "128Mi"
+                  }
+                },
+                "volumeMounts": [
+                  {
+                    "name": "istio-envoy",
+                    "mountPath": "/etc/istio/proxy"
+                  },
+                  {
+                    "name": "config-volume",
+                    "mountPath": "/etc/istio/config"
+                  },
+                  {
+                    "name": "istiod-ca-cert",
+                    "mountPath": "/var/run/secrets/istio"
+                  },
+                  {
+                    "name": "ingressgatewaysdsudspath",
+                    "mountPath": "/var/run/ingress_gateway"
+                  },
+                  {
+                    "name": "podinfo",
+                    "mountPath": "/etc/istio/pod"
+                  },
+                  {
+                    "name": "ingressgateway-certs",
+                    "readOnly": true,
+                    "mountPath": "/etc/istio/ingressgateway-certs"
+                  },
+                  {
+                    "name": "ingressgateway-ca-certs",
+                    "readOnly": true,
+                    "mountPath": "/etc/istio/ingressgateway-ca-certs"
+                  }
+                ],
+                "readinessProbe": {
+                  "httpGet": {
+                    "path": "/healthz/ready",
+                    "port": 15021,
+                    "scheme": "HTTP"
+                  },
+                  "initialDelaySeconds": 1,
+                  "timeoutSeconds": 1,
+                  "periodSeconds": 2,
+                  "successThreshold": 1,
+                  "failureThreshold": 30
+                },
+                "terminationMessagePath": "/dev/termination-log",
+                "terminationMessagePolicy": "File",
+                "imagePullPolicy": "IfNotPresent"
+              }
+            ],
+            "restartPolicy": "Always",
+            "terminationGracePeriodSeconds": 30,
+            "dnsPolicy": "ClusterFirst",
+            "serviceAccountName": "istio-ingressgateway-service-account",
+            "serviceAccount": "istio-ingressgateway-service-account",
+            "securityContext": {},
+            "affinity": {
+              "nodeAffinity": {
+                "requiredDuringSchedulingIgnoredDuringExecution": {
+                  "nodeSelectorTerms": [
+                    {
+                      "matchExpressions": [
+                        {
+                          "key": "beta.kubernetes.io/arch",
+                          "operator": "In",
+                          "values": [
+                            "amd64",
+                            "ppc64le",
+                            "s390x"
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                "preferredDuringSchedulingIgnoredDuringExecution": [
+                  {
+                    "weight": 2,
+                    "preference": {
+                      "matchExpressions": [
+                        {
+                          "key": "beta.kubernetes.io/arch",
+                          "operator": "In",
+                          "values": [
+                            "amd64"
+                          ]
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "weight": 2,
+                    "preference": {
+                      "matchExpressions": [
+                        {
+                          "key": "beta.kubernetes.io/arch",
+                          "operator": "In",
+                          "values": [
+                            "ppc64le"
+                          ]
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "weight": 2,
+                    "preference": {
+                      "matchExpressions": [
+                        {
+                          "key": "beta.kubernetes.io/arch",
+                          "operator": "In",
+                          "values": [
+                            "s390x"
+                          ]
+                        }
+                      ]
+                    }
+                  }
+                ]
+              }
+            },
+            "schedulerName": "default-scheduler"
+          }
+        },
+        "strategy": {
+          "type": "RollingUpdate",
+          "rollingUpdate": {
+            "maxUnavailable": "25%",
+            "maxSurge": "100%"
+          }
+        },
+        "revisionHistoryLimit": 10,
+        "progressDeadlineSeconds": 600
+      },
+      "status": {
+        "observedGeneration": 1,
+        "replicas": 1,
+        "updatedReplicas": 1,
+        "readyReplicas": 1,
+        "availableReplicas": 1,
+        "conditions": [
+          {
+            "type": "Progressing",
+            "status": "True",
+            "lastUpdateTime": "2020-12-01T11:26:25Z",
+            "lastTransitionTime": "2020-12-01T11:26:03Z",
+            "reason": "NewReplicaSetAvailable",
+            "message": "ReplicaSet \"istio-ingressgateway-59ddcb9559\" has successfully progressed."
+          },
+          {
+            "type": "Available",
+            "status": "True",
+            "lastUpdateTime": "2020-12-20T17:34:03Z",
+            "lastTransitionTime": "2020-12-20T17:34:03Z",
+            "reason": "MinimumReplicasAvailable",
+            "message": "Deployment has minimum availability."
+          }
+        ]
+      }
+    },
+    {
+      "metadata": {
+        "name": "istiod",
+        "namespace": "istio-system",
+        "selfLink": "/apis/apps/v1/namespaces/istio-system/deployments/istiod",
+        "uid": "9ddc0a58-1696-44c6-92ed-e96db2861132",
+        "resourceVersion": "568310",
+        "generation": 1,
+        "creationTimestamp": "2020-12-01T11:25:26Z",
+        "labels": {
+          "app": "istiod",
+          "install.operator.istio.io/owning-resource": "installed-state",
+          "install.operator.istio.io/owning-resource-namespace": "istio-system",
+          "istio": "pilot",
+          "istio.io/rev": "default",
+          "operator.istio.io/component": "Pilot",
+          "operator.istio.io/managed": "Reconcile",
+          "operator.istio.io/version": "1.6.4",
+          "release": "istio"
+        },
+        "annotations": {
+          "deployment.kubernetes.io/revision": "1",
+          "kubectl.kubernetes.io/last-applied-configuration": "{\"apiVersion\":\"apps/v1\",\"kind\":\"Deployment\",\"metadata\":{\"annotations\":{},\"labels\":{\"app\":\"istiod\",\"install.operator.istio.io/owning-resource\":\"installed-state\",\"install.operator.istio.io/owning-resource-namespace\":\"istio-system\",\"istio\":\"pilot\",\"istio.io/rev\":\"default\",\"operator.istio.io/component\":\"Pilot\",\"operator.istio.io/managed\":\"Reconcile\",\"operator.istio.io/version\":\"1.6.4\",\"release\":\"istio\"},\"name\":\"istiod\",\"namespace\":\"istio-system\"},\"spec\":{\"selector\":{\"matchLabels\":{\"istio\":\"pilot\"}},\"strategy\":{\"rollingUpdate\":{\"maxSurge\":\"100%\",\"maxUnavailable\":\"25%\"}},\"template\":{\"metadata\":{\"annotations\":{\"sidecar.istio.io/inject\":\"false\"},\"labels\":{\"app\":\"istiod\",\"istio\":\"pilot\",\"istio.io/rev\":\"default\"}},\"spec\":{\"containers\":[{\"args\":[\"discovery\",\"--monitoringAddr=:15014\",\"--log_output_level=default:info\",\"--domain\",\"cluster.local\",\"--trust-domain=cluster.local\",\"--keepaliveMaxServerConnectionAge\",\"30m\"],\"env\":[{\"name\":\"REVISION\",\"value\":\"default\"},{\"name\":\"JWT_POLICY\",\"value\":\"first-party-jwt\"},{\"name\":\"PILOT_CERT_PROVIDER\",\"value\":\"istiod\"},{\"name\":\"POD_NAME\",\"valueFrom\":{\"fieldRef\":{\"apiVersion\":\"v1\",\"fieldPath\":\"metadata.name\"}}},{\"name\":\"POD_NAMESPACE\",\"valueFrom\":{\"fieldRef\":{\"apiVersion\":\"v1\",\"fieldPath\":\"metadata.namespace\"}}},{\"name\":\"SERVICE_ACCOUNT\",\"valueFrom\":{\"fieldRef\":{\"apiVersion\":\"v1\",\"fieldPath\":\"spec.serviceAccountName\"}}},{\"name\":\"PILOT_TRACE_SAMPLING\",\"value\":\"1\"},{\"name\":\"PILOT_ENABLE_PROTOCOL_SNIFFING_FOR_OUTBOUND\",\"value\":\"true\"},{\"name\":\"PILOT_ENABLE_PROTOCOL_SNIFFING_FOR_INBOUND\",\"value\":\"true\"},{\"name\":\"INJECTION_WEBHOOK_CONFIG_NAME\",\"value\":\"istio-sidecar-injector\"},{\"name\":\"ISTIOD_ADDR\",\"value\":\"istiod.istio-system.svc:15012\"},{\"name\":\"PILOT_ENABLE_ANALYSIS\",\"value\":\"false\"},{\"name\":\"CLUSTER_ID\",\"value\":\"Kubernetes\"},{\"name\":\"CENTRAL_ISTIOD\",\"value\":\"false\"}],\"image\":\"docker.io/istio/pilot:1.6.4\",\"name\":\"discovery\",\"ports\":[{\"containerPort\":8080},{\"containerPort\":15010},{\"containerPort\":15017},{\"containerPort\":15053}],\"readinessProbe\":{\"httpGet\":{\"path\":\"/ready\",\"port\":8080},\"initialDelaySeconds\":1,\"periodSeconds\":3,\"timeoutSeconds\":5},\"resources\":{\"requests\":{\"cpu\":\"500m\",\"memory\":\"2048Mi\"}},\"securityContext\":{\"capabilities\":{\"drop\":[\"ALL\"]},\"runAsGroup\":1337,\"runAsNonRoot\":true,\"runAsUser\":1337},\"volumeMounts\":[{\"mountPath\":\"/etc/istio/config\",\"name\":\"config-volume\"},{\"mountPath\":\"/var/run/secrets/istio-dns\",\"name\":\"local-certs\"},{\"mountPath\":\"/etc/cacerts\",\"name\":\"cacerts\",\"readOnly\":true},{\"mountPath\":\"/var/lib/istio/inject\",\"name\":\"inject\",\"readOnly\":true}]}],\"securityContext\":{\"fsGroup\":1337},\"serviceAccountName\":\"istiod-service-account\",\"volumes\":[{\"emptyDir\":{\"medium\":\"Memory\"},\"name\":\"local-certs\"},{\"name\":\"cacerts\",\"secret\":{\"optional\":true,\"secretName\":\"cacerts\"}},{\"configMap\":{\"name\":\"istio-sidecar-injector\",\"optional\":true},\"name\":\"inject\"},{\"configMap\":{\"name\":\"istio\"},\"name\":\"config-volume\"}]}}}}\n"
+        }
+      },
+      "spec": {
+        "replicas": 1,
+        "selector": {
+          "matchLabels": {
+            "istio": "pilot"
+          }
+        },
+        "template": {
+          "metadata": {
+            "creationTimestamp": null,
+            "labels": {
+              "app": "istiod",
+              "istio": "pilot",
+              "istio.io/rev": "default"
+            },
+            "annotations": {
+              "sidecar.istio.io/inject": "false"
+            }
+          },
+          "spec": {
+            "volumes": [
+              {
+                "name": "local-certs",
+                "emptyDir": {
+                  "medium": "Memory"
+                }
+              },
+              {
+                "name": "cacerts",
+                "secret": {
+                  "secretName": "cacerts",
+                  "defaultMode": 420,
+                  "optional": true
+                }
+              },
+              {
+                "name": "inject",
+                "configMap": {
+                  "name": "istio-sidecar-injector",
+                  "defaultMode": 420,
+                  "optional": true
+                }
+              },
+              {
+                "name": "config-volume",
+                "configMap": {
+                  "name": "istio",
+                  "defaultMode": 420
+                }
+              }
+            ],
+            "containers": [
+              {
+                "name": "discovery",
+                "image": "docker.io/istio/pilot:1.6.4",
+                "args": [
+                  "discovery",
+                  "--monitoringAddr=:15014",
+                  "--log_output_level=default:info",
+                  "--domain",
+                  "cluster.local",
+                  "--trust-domain=cluster.local",
+                  "--keepaliveMaxServerConnectionAge",
+                  "30m"
+                ],
+                "ports": [
+                  {
+                    "containerPort": 8080,
+                    "protocol": "TCP"
+                  },
+                  {
+                    "containerPort": 15010,
+                    "protocol": "TCP"
+                  },
+                  {
+                    "containerPort": 15017,
+                    "protocol": "TCP"
+                  },
+                  {
+                    "containerPort": 15053,
+                    "protocol": "TCP"
+                  }
+                ],
+                "env": [
+                  {
+                    "name": "REVISION",
+                    "value": "default"
+                  },
+                  {
+                    "name": "JWT_POLICY",
+                    "value": "first-party-jwt"
+                  },
+                  {
+                    "name": "PILOT_CERT_PROVIDER",
+                    "value": "istiod"
+                  },
+                  {
+                    "name": "POD_NAME",
+                    "valueFrom": {
+                      "fieldRef": {
+                        "apiVersion": "v1",
+                        "fieldPath": "metadata.name"
+                      }
+                    }
+                  },
+                  {
+                    "name": "POD_NAMESPACE",
+                    "valueFrom": {
+                      "fieldRef": {
+                        "apiVersion": "v1",
+                        "fieldPath": "metadata.namespace"
+                      }
+                    }
+                  },
+                  {
+                    "name": "SERVICE_ACCOUNT",
+                    "valueFrom": {
+                      "fieldRef": {
+                        "apiVersion": "v1",
+                        "fieldPath": "spec.serviceAccountName"
+                      }
+                    }
+                  },
+                  {
+                    "name": "PILOT_TRACE_SAMPLING",
+                    "value": "1"
+                  },
+                  {
+                    "name": "PILOT_ENABLE_PROTOCOL_SNIFFING_FOR_OUTBOUND",
+                    "value": "true"
+                  },
+                  {
+                    "name": "PILOT_ENABLE_PROTOCOL_SNIFFING_FOR_INBOUND",
+                    "value": "true"
+                  },
+                  {
+                    "name": "INJECTION_WEBHOOK_CONFIG_NAME",
+                    "value": "istio-sidecar-injector"
+                  },
+                  {
+                    "name": "ISTIOD_ADDR",
+                    "value": "istiod.istio-system.svc:15012"
+                  },
+                  {
+                    "name": "PILOT_ENABLE_ANALYSIS",
+                    "value": "false"
+                  },
+                  {
+                    "name": "CLUSTER_ID",
+                    "value": "Kubernetes"
+                  },
+                  {
+                    "name": "CENTRAL_ISTIOD",
+                    "value": "false"
+                  }
+                ],
+                "resources": {
+                  "requests": {
+                    "cpu": "500m",
+                    "memory": "2Gi"
+                  }
+                },
+                "volumeMounts": [
+                  {
+                    "name": "config-volume",
+                    "mountPath": "/etc/istio/config"
+                  },
+                  {
+                    "name": "local-certs",
+                    "mountPath": "/var/run/secrets/istio-dns"
+                  },
+                  {
+                    "name": "cacerts",
+                    "readOnly": true,
+                    "mountPath": "/etc/cacerts"
+                  },
+                  {
+                    "name": "inject",
+                    "readOnly": true,
+                    "mountPath": "/var/lib/istio/inject"
+                  }
+                ],
+                "readinessProbe": {
+                  "httpGet": {
+                    "path": "/ready",
+                    "port": 8080,
+                    "scheme": "HTTP"
+                  },
+                  "initialDelaySeconds": 1,
+                  "timeoutSeconds": 5,
+                  "periodSeconds": 3,
+                  "successThreshold": 1,
+                  "failureThreshold": 3
+                },
+                "terminationMessagePath": "/dev/termination-log",
+                "terminationMessagePolicy": "File",
+                "imagePullPolicy": "IfNotPresent",
+                "securityContext": {
+                  "capabilities": {
+                    "drop": [
+                      "ALL"
+                    ]
+                  },
+                  "runAsUser": 1337,
+                  "runAsGroup": 1337,
+                  "runAsNonRoot": true
+                }
+              }
+            ],
+            "restartPolicy": "Always",
+            "terminationGracePeriodSeconds": 30,
+            "dnsPolicy": "ClusterFirst",
+            "serviceAccountName": "istiod-service-account",
+            "serviceAccount": "istiod-service-account",
+            "securityContext": {
+              "fsGroup": 1337
+            },
+            "schedulerName": "default-scheduler"
+          }
+        },
+        "strategy": {
+          "type": "RollingUpdate",
+          "rollingUpdate": {
+            "maxUnavailable": "25%",
+            "maxSurge": "100%"
+          }
+        },
+        "revisionHistoryLimit": 10,
+        "progressDeadlineSeconds": 600
+      },
+      "status": {
+        "observedGeneration": 1,
+        "replicas": 1,
+        "updatedReplicas": 1,
+        "readyReplicas": 1,
+        "availableReplicas": 1,
+        "conditions": [
+          {
+            "type": "Progressing",
+            "status": "True",
+            "lastUpdateTime": "2020-12-01T11:26:01Z",
+            "lastTransitionTime": "2020-12-01T11:25:26Z",
+            "reason": "NewReplicaSetAvailable",
+            "message": "ReplicaSet \"istiod-59ddb865bb\" has successfully progressed."
+          },
+          {
+            "type": "Available",
+            "status": "True",
+            "lastUpdateTime": "2020-12-20T17:34:05Z",
+            "lastTransitionTime": "2020-12-20T17:34:05Z",
+            "reason": "MinimumReplicasAvailable",
+            "message": "Deployment has minimum availability."
+          }
+        ]
+      }
+    },
+    {
+      "metadata": {
+        "name": "prometheus",
+        "namespace": "istio-system",
+        "selfLink": "/apis/apps/v1/namespaces/istio-system/deployments/prometheus",
+        "uid": "3c7e5c95-b7ea-48c1-b12e-e039090b3a6f",
+        "resourceVersion": "568300",
+        "generation": 1,
+        "creationTimestamp": "2020-12-01T11:26:03Z",
+        "labels": {
+          "app": "prometheus",
+          "install.operator.istio.io/owning-resource": "installed-state",
+          "install.operator.istio.io/owning-resource-namespace": "istio-system",
+          "operator.istio.io/component": "AddonComponents",
+          "operator.istio.io/managed": "Reconcile",
+          "operator.istio.io/version": "1.6.4",
+          "release": "istio"
+        },
+        "annotations": {
+          "deployment.kubernetes.io/revision": "1",
+          "kubectl.kubernetes.io/last-applied-configuration": "{\"apiVersion\":\"apps/v1\",\"kind\":\"Deployment\",\"metadata\":{\"annotations\":{},\"labels\":{\"app\":\"prometheus\",\"install.operator.istio.io/owning-resource\":\"installed-state\",\"install.operator.istio.io/owning-resource-namespace\":\"istio-system\",\"operator.istio.io/component\":\"AddonComponents\",\"operator.istio.io/managed\":\"Reconcile\",\"operator.istio.io/version\":\"1.6.4\",\"release\":\"istio\"},\"name\":\"prometheus\",\"namespace\":\"istio-system\"},\"spec\":{\"replicas\":1,\"selector\":{\"matchLabels\":{\"app\":\"prometheus\"}},\"template\":{\"metadata\":{\"annotations\":{\"sidecar.istio.io/inject\":\"false\"},\"labels\":{\"app\":\"prometheus\",\"release\":\"istio\"}},\"spec\":{\"affinity\":{\"nodeAffinity\":{\"preferredDuringSchedulingIgnoredDuringExecution\":[{\"preference\":{\"matchExpressions\":[{\"key\":\"beta.kubernetes.io/arch\",\"operator\":\"In\",\"values\":[\"amd64\"]}]},\"weight\":2},{\"preference\":{\"matchExpressions\":[{\"key\":\"beta.kubernetes.io/arch\",\"operator\":\"In\",\"values\":[\"ppc64le\"]}]},\"weight\":2},{\"preference\":{\"matchExpressions\":[{\"key\":\"beta.kubernetes.io/arch\",\"operator\":\"In\",\"values\":[\"s390x\"]}]},\"weight\":2}],\"requiredDuringSchedulingIgnoredDuringExecution\":{\"nodeSelectorTerms\":[{\"matchExpressions\":[{\"key\":\"beta.kubernetes.io/arch\",\"operator\":\"In\",\"values\":[\"amd64\",\"ppc64le\",\"s390x\"]}]}]}}},\"containers\":[{\"args\":[\"--storage.tsdb.retention=6h\",\"--config.file=/etc/prometheus/prometheus.yml\"],\"image\":\"docker.io/prom/prometheus:v2.15.1\",\"livenessProbe\":{\"httpGet\":{\"path\":\"/-/healthy\",\"port\":9090}},\"name\":\"prometheus\",\"ports\":[{\"containerPort\":9090,\"name\":\"http\"}],\"readinessProbe\":{\"httpGet\":{\"path\":\"/-/ready\",\"port\":9090}},\"resources\":{\"requests\":{\"cpu\":\"10m\"}},\"volumeMounts\":[{\"mountPath\":\"/etc/prometheus\",\"name\":\"config-volume\"},{\"mountPath\":\"/etc/istio-certs\",\"name\":\"istio-certs\"}]},{\"args\":[\"proxy\",\"sidecar\",\"--domain\",\"$(POD_NAMESPACE).svc.cluster.local\",\"istio-proxy-prometheus\",\"--proxyLogLevel=warning\",\"--proxyComponentLogLevel=misc:error\",\"--controlPlaneAuthPolicy\",\"NONE\",\"--trust-domain=cluster.local\"],\"env\":[{\"name\":\"OUTPUT_CERTS\",\"value\":\"/etc/istio-certs\"},{\"name\":\"JWT_POLICY\",\"value\":\"first-party-jwt\"},{\"name\":\"PILOT_CERT_PROVIDER\",\"value\":\"istiod\"},{\"name\":\"CA_ADDR\",\"value\":\"istiod.istio-system.svc:15012\"},{\"name\":\"POD_NAME\",\"valueFrom\":{\"fieldRef\":{\"fieldPath\":\"metadata.name\"}}},{\"name\":\"POD_NAMESPACE\",\"valueFrom\":{\"fieldRef\":{\"fieldPath\":\"metadata.namespace\"}}},{\"name\":\"INSTANCE_IP\",\"valueFrom\":{\"fieldRef\":{\"fieldPath\":\"status.podIP\"}}},{\"name\":\"SERVICE_ACCOUNT\",\"valueFrom\":{\"fieldRef\":{\"fieldPath\":\"spec.serviceAccountName\"}}},{\"name\":\"HOST_IP\",\"valueFrom\":{\"fieldRef\":{\"fieldPath\":\"status.hostIP\"}}},{\"name\":\"ISTIO_META_MESH_ID\",\"value\":\"cluster.local\"},{\"name\":\"ISTIO_META_CLUSTER_ID\",\"value\":\"Kubernetes\"}],\"image\":\"docker.io/istio/proxyv2:1.6.4\",\"imagePullPolicy\":\"Always\",\"name\":\"istio-proxy\",\"ports\":[{\"containerPort\":15090,\"name\":\"http-envoy-prom\",\"protocol\":\"TCP\"}],\"readinessProbe\":{\"failureThreshold\":30,\"httpGet\":{\"path\":\"/healthz/ready\",\"port\":15020,\"scheme\":\"HTTP\"},\"initialDelaySeconds\":1,\"periodSeconds\":2,\"successThreshold\":1,\"timeoutSeconds\":1},\"volumeMounts\":[{\"mountPath\":\"/var/run/secrets/istio\",\"name\":\"istiod-ca-cert\"},{\"mountPath\":\"/etc/istio/proxy\",\"name\":\"istio-envoy\"},{\"mountPath\":\"/etc/istio-certs/\",\"name\":\"istio-certs\"},{\"mountPath\":\"/etc/istio/config\",\"name\":\"istio-config-volume\"}]}],\"serviceAccountName\":\"prometheus\",\"volumes\":[{\"configMap\":{\"name\":\"istio\",\"optional\":true},\"name\":\"istio-config-volume\"},{\"configMap\":{\"name\":\"prometheus\"},\"name\":\"config-volume\"},{\"emptyDir\":{\"medium\":\"Memory\"},\"name\":\"istio-certs\"},{\"emptyDir\":{\"medium\":\"Memory\"},\"name\":\"istio-envoy\"},{\"configMap\":{\"defaultMode\":420,\"name\":\"istio-ca-root-cert\"},\"name\":\"istiod-ca-cert\"}]}}}}\n"
+        }
+      },
+      "spec": {
+        "replicas": 1,
+        "selector": {
+          "matchLabels": {
+            "app": "prometheus"
+          }
+        },
+        "template": {
+          "metadata": {
+            "creationTimestamp": null,
+            "labels": {
+              "app": "prometheus",
+              "release": "istio"
+            },
+            "annotations": {
+              "sidecar.istio.io/inject": "false"
+            }
+          },
+          "spec": {
+            "volumes": [
+              {
+                "name": "istio-config-volume",
+                "configMap": {
+                  "name": "istio",
+                  "defaultMode": 420,
+                  "optional": true
+                }
+              },
+              {
+                "name": "config-volume",
+                "configMap": {
+                  "name": "prometheus",
+                  "defaultMode": 420
+                }
+              },
+              {
+                "name": "istio-certs",
+                "emptyDir": {
+                  "medium": "Memory"
+                }
+              },
+              {
+                "name": "istio-envoy",
+                "emptyDir": {
+                  "medium": "Memory"
+                }
+              },
+              {
+                "name": "istiod-ca-cert",
+                "configMap": {
+                  "name": "istio-ca-root-cert",
+                  "defaultMode": 420
+                }
+              }
+            ],
+            "containers": [
+              {
+                "name": "prometheus",
+                "image": "docker.io/prom/prometheus:v2.15.1",
+                "args": [
+                  "--storage.tsdb.retention=6h",
+                  "--config.file=/etc/prometheus/prometheus.yml"
+                ],
+                "ports": [
+                  {
+                    "name": "http",
+                    "containerPort": 9090,
+                    "protocol": "TCP"
+                  }
+                ],
+                "resources": {
+                  "requests": {
+                    "cpu": "10m"
+                  }
+                },
+                "volumeMounts": [
+                  {
+                    "name": "config-volume",
+                    "mountPath": "/etc/prometheus"
+                  },
+                  {
+                    "name": "istio-certs",
+                    "mountPath": "/etc/istio-certs"
+                  }
+                ],
+                "livenessProbe": {
+                  "httpGet": {
+                    "path": "/-/healthy",
+                    "port": 9090,
+                    "scheme": "HTTP"
+                  },
+                  "timeoutSeconds": 1,
+                  "periodSeconds": 10,
+                  "successThreshold": 1,
+                  "failureThreshold": 3
+                },
+                "readinessProbe": {
+                  "httpGet": {
+                    "path": "/-/ready",
+                    "port": 9090,
+                    "scheme": "HTTP"
+                  },
+                  "timeoutSeconds": 1,
+                  "periodSeconds": 10,
+                  "successThreshold": 1,
+                  "failureThreshold": 3
+                },
+                "terminationMessagePath": "/dev/termination-log",
+                "terminationMessagePolicy": "File",
+                "imagePullPolicy": "IfNotPresent"
+              },
+              {
+                "name": "istio-proxy",
+                "image": "docker.io/istio/proxyv2:1.6.4",
+                "args": [
+                  "proxy",
+                  "sidecar",
+                  "--domain",
+                  "$(POD_NAMESPACE).svc.cluster.local",
+                  "istio-proxy-prometheus",
+                  "--proxyLogLevel=warning",
+                  "--proxyComponentLogLevel=misc:error",
+                  "--controlPlaneAuthPolicy",
+                  "NONE",
+                  "--trust-domain=cluster.local"
+                ],
+                "ports": [
+                  {
+                    "name": "http-envoy-prom",
+                    "containerPort": 15090,
+                    "protocol": "TCP"
+                  }
+                ],
+                "env": [
+                  {
+                    "name": "OUTPUT_CERTS",
+                    "value": "/etc/istio-certs"
+                  },
+                  {
+                    "name": "JWT_POLICY",
+                    "value": "first-party-jwt"
+                  },
+                  {
+                    "name": "PILOT_CERT_PROVIDER",
+                    "value": "istiod"
+                  },
+                  {
+                    "name": "CA_ADDR",
+                    "value": "istiod.istio-system.svc:15012"
+                  },
+                  {
+                    "name": "POD_NAME",
+                    "valueFrom": {
+                      "fieldRef": {
+                        "apiVersion": "v1",
+                        "fieldPath": "metadata.name"
+                      }
+                    }
+                  },
+                  {
+                    "name": "POD_NAMESPACE",
+                    "valueFrom": {
+                      "fieldRef": {
+                        "apiVersion": "v1",
+                        "fieldPath": "metadata.namespace"
+                      }
+                    }
+                  },
+                  {
+                    "name": "INSTANCE_IP",
+                    "valueFrom": {
+                      "fieldRef": {
+                        "apiVersion": "v1",
+                        "fieldPath": "status.podIP"
+                      }
+                    }
+                  },
+                  {
+                    "name": "SERVICE_ACCOUNT",
+                    "valueFrom": {
+                      "fieldRef": {
+                        "apiVersion": "v1",
+                        "fieldPath": "spec.serviceAccountName"
+                      }
+                    }
+                  },
+                  {
+                    "name": "HOST_IP",
+                    "valueFrom": {
+                      "fieldRef": {
+                        "apiVersion": "v1",
+                        "fieldPath": "status.hostIP"
+                      }
+                    }
+                  },
+                  {
+                    "name": "ISTIO_META_MESH_ID",
+                    "value": "cluster.local"
+                  },
+                  {
+                    "name": "ISTIO_META_CLUSTER_ID",
+                    "value": "Kubernetes"
+                  }
+                ],
+                "resources": {},
+                "volumeMounts": [
+                  {
+                    "name": "istiod-ca-cert",
+                    "mountPath": "/var/run/secrets/istio"
+                  },
+                  {
+                    "name": "istio-envoy",
+                    "mountPath": "/etc/istio/proxy"
+                  },
+                  {
+                    "name": "istio-certs",
+                    "mountPath": "/etc/istio-certs/"
+                  },
+                  {
+                    "name": "istio-config-volume",
+                    "mountPath": "/etc/istio/config"
+                  }
+                ],
+                "readinessProbe": {
+                  "httpGet": {
+                    "path": "/healthz/ready",
+                    "port": 15020,
+                    "scheme": "HTTP"
+                  },
+                  "initialDelaySeconds": 1,
+                  "timeoutSeconds": 1,
+                  "periodSeconds": 2,
+                  "successThreshold": 1,
+                  "failureThreshold": 30
+                },
+                "terminationMessagePath": "/dev/termination-log",
+                "terminationMessagePolicy": "File",
+                "imagePullPolicy": "Always"
+              }
+            ],
+            "restartPolicy": "Always",
+            "terminationGracePeriodSeconds": 30,
+            "dnsPolicy": "ClusterFirst",
+            "serviceAccountName": "prometheus",
+            "serviceAccount": "prometheus",
+            "securityContext": {},
+            "affinity": {
+              "nodeAffinity": {
+                "requiredDuringSchedulingIgnoredDuringExecution": {
+                  "nodeSelectorTerms": [
+                    {
+                      "matchExpressions": [
+                        {
+                          "key": "beta.kubernetes.io/arch",
+                          "operator": "In",
+                          "values": [
+                            "amd64",
+                            "ppc64le",
+                            "s390x"
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                "preferredDuringSchedulingIgnoredDuringExecution": [
+                  {
+                    "weight": 2,
+                    "preference": {
+                      "matchExpressions": [
+                        {
+                          "key": "beta.kubernetes.io/arch",
+                          "operator": "In",
+                          "values": [
+                            "amd64"
+                          ]
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "weight": 2,
+                    "preference": {
+                      "matchExpressions": [
+                        {
+                          "key": "beta.kubernetes.io/arch",
+                          "operator": "In",
+                          "values": [
+                            "ppc64le"
+                          ]
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "weight": 2,
+                    "preference": {
+                      "matchExpressions": [
+                        {
+                          "key": "beta.kubernetes.io/arch",
+                          "operator": "In",
+                          "values": [
+                            "s390x"
+                          ]
+                        }
+                      ]
+                    }
+                  }
+                ]
+              }
+            },
+            "schedulerName": "default-scheduler"
+          }
+        },
+        "strategy": {
+          "type": "RollingUpdate",
+          "rollingUpdate": {
+            "maxUnavailable": "25%",
+            "maxSurge": "25%"
+          }
+        },
+        "revisionHistoryLimit": 10,
+        "progressDeadlineSeconds": 600
+      },
+      "status": {
+        "observedGeneration": 1,
+        "replicas": 1,
+        "updatedReplicas": 1,
+        "readyReplicas": 1,
+        "availableReplicas": 1,
+        "conditions": [
+          {
+            "type": "Progressing",
+            "status": "True",
+            "lastUpdateTime": "2020-12-01T11:26:53Z",
+            "lastTransitionTime": "2020-12-01T11:26:03Z",
+            "reason": "NewReplicaSetAvailable",
+            "message": "ReplicaSet \"prometheus-7f54ff69cd\" has successfully progressed."
+          },
+          {
+            "type": "Available",
+            "status": "True",
+            "lastUpdateTime": "2020-12-20T17:34:03Z",
+            "lastTransitionTime": "2020-12-20T17:34:03Z",
+            "reason": "MinimumReplicasAvailable",
+            "message": "Deployment has minimum availability."
+          }
+        ]
+      }
+    },
+    {
+      "metadata": {
+        "name": "coredns",
+        "namespace": "kube-system",
+        "selfLink": "/apis/apps/v1/namespaces/kube-system/deployments/coredns",
+        "uid": "b3611447-41ac-4c2c-b5c0-9a1d44123b0e",
+        "resourceVersion": "568287",
+        "generation": 1,
+        "creationTimestamp": "2020-12-01T11:20:50Z",
+        "labels": {
+          "k8s-app": "kube-dns"
+        },
+        "annotations": {
+          "deployment.kubernetes.io/revision": "1"
+        }
+      },
+      "spec": {
+        "replicas": 2,
+        "selector": {
+          "matchLabels": {
+            "k8s-app": "kube-dns"
+          }
+        },
+        "template": {
+          "metadata": {
+            "creationTimestamp": null,
+            "labels": {
+              "k8s-app": "kube-dns"
+            }
+          },
+          "spec": {
+            "volumes": [
+              {
+                "name": "config-volume",
+                "configMap": {
+                  "name": "coredns",
+                  "items": [
+                    {
+                      "key": "Corefile",
+                      "path": "Corefile"
+                    }
+                  ],
+                  "defaultMode": 420
+                }
+              }
+            ],
+            "containers": [
+              {
+                "name": "coredns",
+                "image": "k8s.gcr.io/coredns:1.6.2",
+                "args": [
+                  "-conf",
+                  "/etc/coredns/Corefile"
+                ],
+                "ports": [
+                  {
+                    "name": "dns",
+                    "containerPort": 53,
+                    "protocol": "UDP"
+                  },
+                  {
+                    "name": "dns-tcp",
+                    "containerPort": 53,
+                    "protocol": "TCP"
+                  },
+                  {
+                    "name": "metrics",
+                    "containerPort": 9153,
+                    "protocol": "TCP"
+                  }
+                ],
+                "resources": {
+                  "limits": {
+                    "memory": "170Mi"
+                  },
+                  "requests": {
+                    "cpu": "100m",
+                    "memory": "70Mi"
+                  }
+                },
+                "volumeMounts": [
+                  {
+                    "name": "config-volume",
+                    "readOnly": true,
+                    "mountPath": "/etc/coredns"
+                  }
+                ],
+                "livenessProbe": {
+                  "httpGet": {
+                    "path": "/health",
+                    "port": 8080,
+                    "scheme": "HTTP"
+                  },
+                  "initialDelaySeconds": 60,
+                  "timeoutSeconds": 5,
+                  "periodSeconds": 10,
+                  "successThreshold": 1,
+                  "failureThreshold": 5
+                },
+                "readinessProbe": {
+                  "httpGet": {
+                    "path": "/ready",
+                    "port": 8181,
+                    "scheme": "HTTP"
+                  },
+                  "timeoutSeconds": 1,
+                  "periodSeconds": 10,
+                  "successThreshold": 1,
+                  "failureThreshold": 3
+                },
+                "terminationMessagePath": "/dev/termination-log",
+                "terminationMessagePolicy": "File",
+                "imagePullPolicy": "IfNotPresent",
+                "securityContext": {
+                  "capabilities": {
+                    "add": [
+                      "NET_BIND_SERVICE"
+                    ],
+                    "drop": [
+                      "all"
+                    ]
+                  },
+                  "readOnlyRootFilesystem": true,
+                  "allowPrivilegeEscalation": false
+                }
+              }
+            ],
+            "restartPolicy": "Always",
+            "terminationGracePeriodSeconds": 30,
+            "dnsPolicy": "Default",
+            "nodeSelector": {
+              "beta.kubernetes.io/os": "linux"
+            },
+            "serviceAccountName": "coredns",
+            "serviceAccount": "coredns",
+            "securityContext": {},
+            "schedulerName": "default-scheduler",
+            "tolerations": [
+              {
+                "key": "CriticalAddonsOnly",
+                "operator": "Exists"
+              },
+              {
+                "key": "node-role.kubernetes.io/master",
+                "effect": "NoSchedule"
+              }
+            ],
+            "priorityClassName": "system-cluster-critical"
+          }
+        },
+        "strategy": {
+          "type": "RollingUpdate",
+          "rollingUpdate": {
+            "maxUnavailable": 1,
+            "maxSurge": "25%"
+          }
+        },
+        "revisionHistoryLimit": 10,
+        "progressDeadlineSeconds": 600
+      },
+      "status": {
+        "observedGeneration": 1,
+        "replicas": 2,
+        "updatedReplicas": 2,
+        "readyReplicas": 2,
+        "availableReplicas": 2,
+        "conditions": [
+          {
+            "type": "Progressing",
+            "status": "True",
+            "lastUpdateTime": "2020-12-01T11:21:27Z",
+            "lastTransitionTime": "2020-12-01T11:21:07Z",
+            "reason": "NewReplicaSetAvailable",
+            "message": "ReplicaSet \"coredns-5644d7b6d9\" has successfully progressed."
+          },
+          {
+            "type": "Available",
+            "status": "True",
+            "lastUpdateTime": "2020-12-20T17:34:02Z",
+            "lastTransitionTime": "2020-12-20T17:34:02Z",
+            "reason": "MinimumReplicasAvailable",
+            "message": "Deployment has minimum availability."
+          }
+        ]
+      }
+    },
+    {
+      "metadata": {
+        "name": "local-path-provisioner",
+        "namespace": "local-path-storage",
+        "selfLink": "/apis/apps/v1/namespaces/local-path-storage/deployments/local-path-provisioner",
+        "uid": "dde19750-776e-43a9-aa0e-d74ac66c0ee5",
+        "resourceVersion": "568290",
+        "generation": 1,
+        "creationTimestamp": "2020-12-01T11:20:53Z",
+        "annotations": {
+          "deployment.kubernetes.io/revision": "1",
+          "kubectl.kubernetes.io/last-applied-configuration": "{\"apiVersion\":\"apps/v1\",\"kind\":\"Deployment\",\"metadata\":{\"annotations\":{},\"name\":\"local-path-provisioner\",\"namespace\":\"local-path-storage\"},\"spec\":{\"replicas\":1,\"selector\":{\"matchLabels\":{\"app\":\"local-path-provisioner\"}},\"template\":{\"metadata\":{\"labels\":{\"app\":\"local-path-provisioner\"}},\"spec\":{\"containers\":[{\"command\":[\"local-path-provisioner\",\"--debug\",\"start\",\"--helper-image\",\"k8s.gcr.io/debian-base:v2.0.0\",\"--config\",\"/etc/config/config.json\"],\"env\":[{\"name\":\"POD_NAMESPACE\",\"valueFrom\":{\"fieldRef\":{\"fieldPath\":\"metadata.namespace\"}}}],\"image\":\"rancher/local-path-provisioner:v0.0.12\",\"imagePullPolicy\":\"IfNotPresent\",\"name\":\"local-path-provisioner\",\"volumeMounts\":[{\"mountPath\":\"/etc/config/\",\"name\":\"config-volume\"}]}],\"nodeSelector\":{\"kubernetes.io/os\":\"linux\"},\"serviceAccountName\":\"local-path-provisioner-service-account\",\"tolerations\":[{\"effect\":\"NoSchedule\",\"key\":\"node-role.kubernetes.io/master\",\"operator\":\"Equal\"}],\"volumes\":[{\"configMap\":{\"name\":\"local-path-config\"},\"name\":\"config-volume\"}]}}}}\n"
+        }
+      },
+      "spec": {
+        "replicas": 1,
+        "selector": {
+          "matchLabels": {
+            "app": "local-path-provisioner"
+          }
+        },
+        "template": {
+          "metadata": {
+            "creationTimestamp": null,
+            "labels": {
+              "app": "local-path-provisioner"
+            }
+          },
+          "spec": {
+            "volumes": [
+              {
+                "name": "config-volume",
+                "configMap": {
+                  "name": "local-path-config",
+                  "defaultMode": 420
+                }
+              }
+            ],
+            "containers": [
+              {
+                "name": "local-path-provisioner",
+                "image": "rancher/local-path-provisioner:v0.0.12",
+                "command": [
+                  "local-path-provisioner",
+                  "--debug",
+                  "start",
+                  "--helper-image",
+                  "k8s.gcr.io/debian-base:v2.0.0",
+                  "--config",
+                  "/etc/config/config.json"
+                ],
+                "env": [
+                  {
+                    "name": "POD_NAMESPACE",
+                    "valueFrom": {
+                      "fieldRef": {
+                        "apiVersion": "v1",
+                        "fieldPath": "metadata.namespace"
+                      }
+                    }
+                  }
+                ],
+                "resources": {},
+                "volumeMounts": [
+                  {
+                    "name": "config-volume",
+                    "mountPath": "/etc/config/"
+                  }
+                ],
+                "terminationMessagePath": "/dev/termination-log",
+                "terminationMessagePolicy": "File",
+                "imagePullPolicy": "IfNotPresent"
+              }
+            ],
+            "restartPolicy": "Always",
+            "terminationGracePeriodSeconds": 30,
+            "dnsPolicy": "ClusterFirst",
+            "nodeSelector": {
+              "kubernetes.io/os": "linux"
+            },
+            "serviceAccountName": "local-path-provisioner-service-account",
+            "serviceAccount": "local-path-provisioner-service-account",
+            "securityContext": {},
+            "schedulerName": "default-scheduler",
+            "tolerations": [
+              {
+                "key": "node-role.kubernetes.io/master",
+                "operator": "Equal",
+                "effect": "NoSchedule"
+              }
+            ]
+          }
+        },
+        "strategy": {
+          "type": "RollingUpdate",
+          "rollingUpdate": {
+            "maxUnavailable": "25%",
+            "maxSurge": "25%"
+          }
+        },
+        "revisionHistoryLimit": 10,
+        "progressDeadlineSeconds": 600
+      },
+      "status": {
+        "observedGeneration": 1,
+        "replicas": 1,
+        "updatedReplicas": 1,
+        "readyReplicas": 1,
+        "availableReplicas": 1,
+        "conditions": [
+          {
+            "type": "Progressing",
+            "status": "True",
+            "lastUpdateTime": "2020-12-01T11:21:24Z",
+            "lastTransitionTime": "2020-12-01T11:21:07Z",
+            "reason": "NewReplicaSetAvailable",
+            "message": "ReplicaSet \"local-path-provisioner-58f6947c7\" has successfully progressed."
+          },
+          {
+            "type": "Available",
+            "status": "True",
+            "lastUpdateTime": "2020-12-20T17:34:02Z",
+            "lastTransitionTime": "2020-12-20T17:34:02Z",
+            "reason": "MinimumReplicasAvailable",
+            "message": "Deployment has minimum availability."
+          }
+        ]
+      }
+    },
+    {
+      "metadata": {
+        "name": "policy-management-api",
+        "namespace": "platform",
+        "selfLink": "/apis/apps/v1/namespaces/platform/deployments/policy-management-api",
+        "uid": "4738fe42-98c8-42c8-98ba-36b6074ea8d3",
+        "resourceVersion": "574776",
+        "generation": 2,
+        "creationTimestamp": "2020-12-01T11:40:07Z",
+        "labels": {
+          "app": "policy-management-api",
+          "kapp.k14s.io/app": "1606822795158432000",
+          "kapp.k14s.io/association": "v1.4f1457198283b2e54ae5ea24025c71ee"
+        },
+        "annotations": {
+          "deployment.kubernetes.io/revision": "1",
+          "kapp.k14s.io/identity": "v1;platform/apps/Deployment/policy-management-api;apps/v1",
+          "kapp.k14s.io/original": "{\"apiVersion\":\"apps/v1\",\"kind\":\"Deployment\",\"metadata\":{\"annotations\":{\"deployment.kubernetes.io/revision\":\"1\",\"kubectl.kubernetes.io/last-applied-configuration\":\"{\\\"apiVersion\\\":\\\"apps/v1\\\",\\\"kind\\\":\\\"Deployment\\\",\\\"metadata\\\":{\\\"annotations\\\":{},\\\"labels\\\":{\\\"app\\\":\\\"policy-management-api\\\"},\\\"name\\\":\\\"policy-management-api\\\",\\\"namespace\\\":\\\"platform\\\"},\\\"spec\\\":{\\\"replicas\\\":3,\\\"revisionHistoryLimit\\\":5,\\\"selector\\\":{\\\"matchLabels\\\":{\\\"app\\\":\\\"policy-management-api\\\"}},\\\"strategy\\\":{\\\"rollingUpdate\\\":{\\\"maxSurge\\\":1,\\\"maxUnavailable\\\":0},\\\"type\\\":\\\"RollingUpdate\\\"},\\\"template\\\":{\\\"metadata\\\":{\\\"labels\\\":{\\\"app\\\":\\\"policy-management-api\\\"}},\\\"spec\\\":{\\\"containers\\\":[{\\\"args\\\":[\\\"-config-file-path=/etc/config/config.yaml\\\",\\\"-server-read-timeout=5\\\",\\\"-server-write-timeout=5\\\"],\\\"env\\\":[{\\\"name\\\":\\\"PLATFORM_POLICY_PATH\\\",\\\"value\\\":\\\"platform/opa/policies/common\\\"},{\\\"name\\\":\\\"CONSUL_HTTP_TOKEN\\\",\\\"valueFrom\\\":{\\\"secretKeyRef\\\":{\\\"key\\\":\\\"consul.token\\\",\\\"name\\\":\\\"policy-management-api-secret-h9k5fkc88k\\\"}}}],\\\"image\\\":\\\"sfrontregistry.trendyol.com/policy-management-api:40bc645f\\\",\\\"imagePullPolicy\\\":\\\"IfNotPresent\\\",\\\"livenessProbe\\\":{\\\"failureThreshold\\\":3,\\\"httpGet\\\":{\\\"path\\\":\\\"/v1/health/livez\\\",\\\"port\\\":\\\"http\\\",\\\"scheme\\\":\\\"HTTP\\\"},\\\"initialDelaySeconds\\\":5,\\\"periodSeconds\\\":1,\\\"successThreshold\\\":1,\\\"timeoutSeconds\\\":1},\\\"name\\\":\\\"policy-management-api\\\",\\\"ports\\\":[{\\\"containerPort\\\":8080,\\\"name\\\":\\\"http\\\",\\\"protocol\\\":\\\"TCP\\\"}],\\\"readinessProbe\\\":{\\\"failureThreshold\\\":3,\\\"httpGet\\\":{\\\"path\\\":\\\"/v1/health/readyz\\\",\\\"port\\\":\\\"http\\\",\\\"scheme\\\":\\\"HTTP\\\"},\\\"initialDelaySeconds\\\":5,\\\"periodSeconds\\\":1,\\\"successThreshold\\\":1,\\\"timeoutSeconds\\\":1},\\\"resources\\\":{\\\"limits\\\":{\\\"cpu\\\":\\\"200m\\\",\\\"memory\\\":\\\"128Mi\\\"},\\\"requests\\\":{\\\"cpu\\\":\\\"100m\\\",\\\"memory\\\":\\\"64Mi\\\"}},\\\"volumeMounts\\\":[{\\\"mountPath\\\":\\\"/etc/config\\\",\\\"name\\\":\\\"policy-management-api-config-volume\\\"}]}],\\\"imagePullSecrets\\\":[{\\\"name\\\":\\\"policy-management-api-regcred\\\"}],\\\"volumes\\\":[{\\\"configMap\\\":{\\\"name\\\":\\\"policy-management-api-config\\\"},\\\"name\\\":\\\"policy-management-api-config-volume\\\"}]}}}}\\n\"},\"creationTimestamp\":null,\"generation\":1,\"labels\":{\"app\":\"policy-management-api\",\"kapp.k14s.io/app\":\"1606822795158432000\",\"kapp.k14s.io/association\":\"v1.4f1457198283b2e54ae5ea24025c71ee\"},\"name\":\"policy-management-api\",\"namespace\":\"platform\",\"selfLink\":\"/apis/apps/v1/namespaces/platform/deployments/policy-management-api\"},\"spec\":{\"progressDeadlineSeconds\":600,\"replicas\":3,\"revisionHistoryLimit\":5,\"selector\":{\"matchLabels\":{\"app\":\"policy-management-api\",\"kapp.k14s.io/app\":\"1606822795158432000\"}},\"strategy\":{\"rollingUpdate\":{\"maxSurge\":1,\"maxUnavailable\":0},\"type\":\"RollingUpdate\"},\"template\":{\"metadata\":{\"creationTimestamp\":null,\"labels\":{\"app\":\"policy-management-api\",\"kapp.k14s.io/app\":\"1606822795158432000\",\"kapp.k14s.io/association\":\"v1.4f1457198283b2e54ae5ea24025c71ee\"}},\"spec\":{\"containers\":[{\"args\":[\"-config-file-path=/etc/config/config.yaml\",\"-server-read-timeout=5\",\"-server-write-timeout=5\"],\"env\":[{\"name\":\"PLATFORM_POLICY_PATH\",\"value\":\"platform/opa/policies/common\"},{\"name\":\"CONSUL_HTTP_TOKEN\",\"valueFrom\":{\"secretKeyRef\":{\"key\":\"consul.token\",\"name\":\"policy-management-api-secret-h9k5fkc88k\"}}}],\"image\":\"sfrontregistry.trendyol.com/policy-management-api:40bc645f\",\"imagePullPolicy\":\"IfNotPresent\",\"livenessProbe\":{\"failureThreshold\":3,\"httpGet\":{\"path\":\"/v1/health/livez\",\"port\":\"http\",\"scheme\":\"HTTP\"},\"initialDelaySeconds\":5,\"periodSeconds\":1,\"successThreshold\":1,\"timeoutSeconds\":1},\"name\":\"policy-management-api\",\"ports\":[{\"containerPort\":8080,\"name\":\"http\",\"protocol\":\"TCP\"}],\"readinessProbe\":{\"failureThreshold\":3,\"httpGet\":{\"path\":\"/v1/health/readyz\",\"port\":\"http\",\"scheme\":\"HTTP\"},\"initialDelaySeconds\":5,\"periodSeconds\":1,\"successThreshold\":1,\"timeoutSeconds\":1},\"resources\":{\"limits\":{\"cpu\":\"200m\",\"memory\":\"128Mi\"},\"requests\":{\"cpu\":\"100m\",\"memory\":\"64Mi\"}},\"terminationMessagePath\":\"/dev/termination-log\",\"terminationMessagePolicy\":\"File\",\"volumeMounts\":[{\"mountPath\":\"/etc/config\",\"name\":\"policy-management-api-config-volume\"}]}],\"dnsPolicy\":\"ClusterFirst\",\"imagePullSecrets\":[{\"name\":\"policy-management-api-regcred\"}],\"restartPolicy\":\"Always\",\"schedulerName\":\"default-scheduler\",\"securityContext\":{},\"terminationGracePeriodSeconds\":30,\"volumes\":[{\"configMap\":{\"defaultMode\":420,\"name\":\"policy-management-api-config\"},\"name\":\"policy-management-api-config-volume\"}]}}},\"status\":{}}",
+          "kapp.k14s.io/original-diff-md5": "57f72c514d76878037ba1a0acc47c6cf",
+          "kubectl.kubernetes.io/last-applied-configuration": "{\"apiVersion\":\"apps/v1\",\"kind\":\"Deployment\",\"metadata\":{\"annotations\":{},\"labels\":{\"app\":\"policy-management-api\"},\"name\":\"policy-management-api\",\"namespace\":\"platform\"},\"spec\":{\"replicas\":3,\"revisionHistoryLimit\":5,\"selector\":{\"matchLabels\":{\"app\":\"policy-management-api\"}},\"strategy\":{\"rollingUpdate\":{\"maxSurge\":1,\"maxUnavailable\":0},\"type\":\"RollingUpdate\"},\"template\":{\"metadata\":{\"labels\":{\"app\":\"policy-management-api\"}},\"spec\":{\"containers\":[{\"args\":[\"-config-file-path=/etc/config/config.yaml\",\"-server-read-timeout=5\",\"-server-write-timeout=5\"],\"env\":[{\"name\":\"PLATFORM_POLICY_PATH\",\"value\":\"platform/opa/policies/common\"},{\"name\":\"CONSUL_HTTP_TOKEN\",\"valueFrom\":{\"secretKeyRef\":{\"key\":\"consul.token\",\"name\":\"policy-management-api-secret-h9k5fkc88k\"}}}],\"image\":\"sfrontregistry.trendyol.com/policy-management-api:40bc645f\",\"imagePullPolicy\":\"IfNotPresent\",\"livenessProbe\":{\"failureThreshold\":3,\"httpGet\":{\"path\":\"/v1/health/livez\",\"port\":\"http\",\"scheme\":\"HTTP\"},\"initialDelaySeconds\":5,\"periodSeconds\":1,\"successThreshold\":1,\"timeoutSeconds\":1},\"name\":\"policy-management-api\",\"ports\":[{\"containerPort\":8080,\"name\":\"http\",\"protocol\":\"TCP\"}],\"readinessProbe\":{\"failureThreshold\":3,\"httpGet\":{\"path\":\"/v1/health/readyz\",\"port\":\"http\",\"scheme\":\"HTTP\"},\"initialDelaySeconds\":5,\"periodSeconds\":1,\"successThreshold\":1,\"timeoutSeconds\":1},\"resources\":{\"limits\":{\"cpu\":\"200m\",\"memory\":\"128Mi\"},\"requests\":{\"cpu\":\"100m\",\"memory\":\"64Mi\"}},\"volumeMounts\":[{\"mountPath\":\"/etc/config\",\"name\":\"policy-management-api-config-volume\"}]}],\"imagePullSecrets\":[{\"name\":\"policy-management-api-regcred\"}],\"volumes\":[{\"configMap\":{\"name\":\"policy-management-api-config\"},\"name\":\"policy-management-api-config-volume\"}]}}}}\n"
+        }
+      },
+      "spec": {
+        "replicas": 3,
+        "selector": {
+          "matchLabels": {
+            "app": "policy-management-api",
+            "kapp.k14s.io/app": "1606822795158432000"
+          }
+        },
+        "template": {
+          "metadata": {
+            "creationTimestamp": null,
+            "labels": {
+              "app": "policy-management-api",
+              "kapp.k14s.io/app": "1606822795158432000",
+              "kapp.k14s.io/association": "v1.4f1457198283b2e54ae5ea24025c71ee"
+            }
+          },
+          "spec": {
+            "volumes": [
+              {
+                "name": "policy-management-api-config-volume",
+                "configMap": {
+                  "name": "policy-management-api-config",
+                  "defaultMode": 420
+                }
+              }
+            ],
+            "containers": [
+              {
+                "name": "policy-management-api",
+                "image": "sfrontregistry.trendyol.com/policy-management-api:40bc645f",
+                "args": [
+                  "-config-file-path=/etc/config/config.yaml",
+                  "-server-read-timeout=5",
+                  "-server-write-timeout=5"
+                ],
+                "ports": [
+                  {
+                    "name": "http",
+                    "containerPort": 8080,
+                    "protocol": "TCP"
+                  }
+                ],
+                "env": [
+                  {
+                    "name": "PLATFORM_POLICY_PATH",
+                    "value": "platform/opa/policies/common"
+                  },
+                  {
+                    "name": "CONSUL_HTTP_TOKEN",
+                    "valueFrom": {
+                      "secretKeyRef": {
+                        "name": "policy-management-api-secret-h9k5fkc88k",
+                        "key": "consul.token"
+                      }
+                    }
+                  }
+                ],
+                "resources": {
+                  "limits": {
+                    "cpu": "200m",
+                    "memory": "128Mi"
+                  },
+                  "requests": {
+                    "cpu": "100m",
+                    "memory": "64Mi"
+                  }
+                },
+                "volumeMounts": [
+                  {
+                    "name": "policy-management-api-config-volume",
+                    "mountPath": "/etc/config"
+                  }
+                ],
+                "livenessProbe": {
+                  "httpGet": {
+                    "path": "/v1/health/livez",
+                    "port": "http",
+                    "scheme": "HTTP"
+                  },
+                  "initialDelaySeconds": 5,
+                  "timeoutSeconds": 1,
+                  "periodSeconds": 1,
+                  "successThreshold": 1,
+                  "failureThreshold": 3
+                },
+                "readinessProbe": {
+                  "httpGet": {
+                    "path": "/v1/health/readyz",
+                    "port": "http",
+                    "scheme": "HTTP"
+                  },
+                  "initialDelaySeconds": 5,
+                  "timeoutSeconds": 1,
+                  "periodSeconds": 1,
+                  "successThreshold": 1,
+                  "failureThreshold": 3
+                },
+                "terminationMessagePath": "/dev/termination-log",
+                "terminationMessagePolicy": "File",
+                "imagePullPolicy": "IfNotPresent"
+              }
+            ],
+            "restartPolicy": "Always",
+            "terminationGracePeriodSeconds": 30,
+            "dnsPolicy": "ClusterFirst",
+            "securityContext": {},
+            "imagePullSecrets": [
+              {
+                "name": "policy-management-api-regcred"
+              }
+            ],
+            "schedulerName": "default-scheduler"
+          }
+        },
+        "strategy": {
+          "type": "RollingUpdate",
+          "rollingUpdate": {
+            "maxUnavailable": 0,
+            "maxSurge": 1
+          }
+        },
+        "revisionHistoryLimit": 5,
+        "progressDeadlineSeconds": 600
+      },
+      "status": {
+        "observedGeneration": 2,
+        "replicas": 3,
+        "updatedReplicas": 3,
+        "readyReplicas": 3,
+        "availableReplicas": 3,
+        "conditions": [
+          {
+            "type": "Progressing",
+            "status": "True",
+            "lastUpdateTime": "2020-12-01T11:41:58Z",
+            "lastTransitionTime": "2020-12-01T11:40:07Z",
+            "reason": "NewReplicaSetAvailable",
+            "message": "ReplicaSet \"policy-management-api-b85d9575f\" has successfully progressed."
+          },
+          {
+            "type": "Available",
+            "status": "True",
+            "lastUpdateTime": "2020-12-20T18:47:14Z",
+            "lastTransitionTime": "2020-12-20T18:47:14Z",
+            "reason": "MinimumReplicasAvailable",
+            "message": "Deployment has minimum availability."
+          }
+        ]
+      }
+    }
+  ]
+}
