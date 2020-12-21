@@ -3,7 +3,6 @@ package main
 import (
 	"encoding/json"
 	"flag"
-	"fmt"
 	"github.com/julienschmidt/httprouter"
 	v1 "k8s.io/api/apps/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
@@ -30,7 +29,7 @@ func NewClusterConnection() *ClusterConnection {
 
 	cfg, err := clientcmd.LoadFromFile(*kubeconfig)
 	if err != nil {
-		fmt.Println("error", err)
+			panic(err.Error())
 	}
 
 	clusterConnections := make(map[string]*kubernetes.Clientset)
