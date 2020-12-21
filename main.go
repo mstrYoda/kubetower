@@ -61,11 +61,11 @@ func (c ClusterConnection) GetDeployments(clusters []string) (map[string][]v1.De
 		deployments, err := c.connections[cluster].AppsV1().Deployments("").List(metav1.ListOptions{})
 		if err != nil {
 			errors = append(errors, err)
+			deploymentClusterMap[cluster] = nil
 		} else {
 			errors = append(errors, nil)
+			deploymentClusterMap[cluster] = deployments.Items
 		}
-
-		deploymentClusterMap[cluster] = deployments.Items
 	}
 
 	return deploymentClusterMap, errors
@@ -112,11 +112,8 @@ func GetDeployments(w http.ResponseWriter, r *http.Request, _ httprouter.Params)
 
 	for index, cluster := range clusterList {
 		deploymentClusterMap[index].ClusterName = cluster
-		if errors[index] != nil {
-			deploymentClusterMap[index].Error = errors[index]
-		} else {
-			deploymentClusterMap[index].Deployments = deployments[cluster]
-		}
+		deploymentClusterMap[index].Deployments = deployments[cluster]
+		deploymentClusterMap[index].Error = errors[index]
 	}
 
 	responseBytes, err := json.Marshal(deploymentClusterMap)
