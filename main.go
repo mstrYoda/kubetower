@@ -35,8 +35,11 @@ func NewClusterConnection() *ClusterConnection {
 	for _, context := range cfg.Contexts {
 		// TODO: respect to name differences between contexts-clusters
 		cc := clientcmd.NewDefaultClientConfig(*cfg, &clientcmd.ConfigOverrides{CurrentContext: context.Cluster})
-		// TODO: handle error
-		restConfig, _ := cc.ClientConfig()
+
+		restConfig, err := cc.ClientConfig()
+		if err != nil {
+			panic(err.Error())
+		}
 
 		clientSet, err := kubernetes.NewForConfig(restConfig)
 		if err != nil {
@@ -85,7 +88,7 @@ func main() {
 	router.GET("/resources/deployments", GetDeployments)
 
 	srv := &http.Server{
-		Addr: ":8080",
+		Addr:    ":8080",
 		Handler: router,
 	}
 
@@ -97,7 +100,7 @@ func main() {
 func GetDeployments(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
 	clusters := r.URL.Query().Get("clusters")
 
-	deployments, _ := clusterConnection.GetDeployments(strings.Split(clusters,","))
+	deployments, _ := clusterConnection.GetDeployments(strings.Split(clusters, ","))
 
 	responseBytes, _ := json.Marshal(deployments)
 
