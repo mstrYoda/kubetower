@@ -3,15 +3,19 @@ package main
 import (
 	"encoding/json"
 	"flag"
+	"fmt"
 	"github.com/julienschmidt/httprouter"
+	"io/ioutil"
 	v1 "k8s.io/api/apps/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	"k8s.io/apimachinery/pkg/types"
 	"k8s.io/client-go/kubernetes"
 	"k8s.io/client-go/tools/clientcmd"
 	"k8s.io/client-go/util/homedir"
 	"net/http"
 	"path/filepath"
 	"strings"
+	"time"
 )
 
 type ClusterConnection struct {
@@ -71,21 +75,40 @@ func (c ClusterConnection) GetDeployments(clusters []string) (map[string][]v1.De
 
 var clusterConnection *ClusterConnection
 
+func (c ClusterConnection) RolloutRestartDeployment(deploymentName, namespace string, clusters []string) []error {
+	timeNow := time.Now().UTC().Format(time.RFC3339)
+	restartRequest := "{\"spec\":{\"template\":{\"metadata\":{\"annotations\":{\"kubectl.kubernetes.io/restartedAt\":\""+ timeNow +"\"}}}}}"
+
+	var errs []error
+
+	for _, cluster := range clusters {
+		_, err := c.connections[cluster].AppsV1().Deployments(namespace).Patch(deploymentName, types.StrategicMergePatchType, []byte(restartRequest))
+
+		if err != nil {
+			errs = append(errs, err)
+		} else {
+			errs = append(errs, nil)
+		}
+	}
+
+	return errs
+}
+
 func main() {
 	clusterConnection = NewClusterConnection()
-	/*
-		//PUT clusters/add
-		//GET clusters/
 
-		//GET resources/deployments?clusters=
-		//PUT resources/deployments
-	*/
+	//PUT clusters/add
+	//GET clusters/
+
+	//GET resources/deployments?clusters=
+	//PUT resources/deployments
 
 	router := httprouter.New()
 	router.GET("/resources/deployments", GetDeployments)
+	router.POST("/resources/deployments/restart", RolloutRestartDeployment)
 
 	srv := &http.Server{
-		Addr: ":8080",
+		Addr:    ":8080",
 		Handler: router,
 	}
 
@@ -94,10 +117,39 @@ func main() {
 	}
 }
 
+type RolloutRestartDeploymentRequest struct {
+	DeploymentName string `json:"deploymentName"`
+	Namespace string `json:"namespace"`
+	Clusters []string `json:"clusters"`
+}
+
+func RolloutRestartDeployment(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
+	var request RolloutRestartDeploymentRequest
+	reqBytes, err := ioutil.ReadAll(r.Body)
+
+	if err != nil {
+		fmt.Println(err)
+		w.WriteHeader(http.StatusBadRequest)
+		return
+	}
+
+	err = json.Unmarshal(reqBytes, &request)
+	if err != nil {
+		fmt.Println(err)
+		w.WriteHeader(http.StatusBadRequest)
+		return
+	}
+
+	errs := clusterConnection.RolloutRestartDeployment(request.DeploymentName, request.Namespace, request.Clusters)
+
+	responseByte, _ := json.Marshal(errs)
+	w.Write(responseByte)
+}
+
 func GetDeployments(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
 	clusters := r.URL.Query().Get("clusters")
 
-	deployments, _ := clusterConnection.GetDeployments(strings.Split(clusters,","))
+	deployments, _ := clusterConnection.GetDeployments(strings.Split(clusters, ","))
 
 	responseBytes, _ := json.Marshal(deployments)
 
