@@ -39,8 +39,11 @@ func NewClusterConnection() *ClusterConnection {
 	for _, context := range cfg.Contexts {
 		// TODO: respect to name differences between contexts-clusters
 		cc := clientcmd.NewDefaultClientConfig(*cfg, &clientcmd.ConfigOverrides{CurrentContext: context.Cluster})
-		// TODO: handle error
-		restConfig, _ := cc.ClientConfig()
+
+		restConfig, err := cc.ClientConfig()
+		if err != nil {
+			panic(err.Error())
+		}
 
 		clientSet, err := kubernetes.NewForConfig(restConfig)
 		if err != nil {
