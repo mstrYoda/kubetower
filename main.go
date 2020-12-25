@@ -80,12 +80,43 @@ var clusterConnection *ClusterConnection
 
 func (c ClusterConnection) RolloutRestartDeployment(deploymentName, namespace string, clusters []string) []error {
 	timeNow := time.Now().UTC().Format(time.RFC3339)
-	restartRequest := "{\"spec\":{\"template\":{\"metadata\":{\"annotations\":{\"kubectl.kubernetes.io/restartedAt\":\""+ timeNow +"\"}}}}}"
+	restartRequest := "{\"spec\":{\"template\":{\"metadata\":{\"annotations\":{\"kubectl.kubernetes.io/restartedAt\":\"" + timeNow + "\"}}}}}"
 
 	var errs []error
 
 	for _, cluster := range clusters {
 		_, err := c.connections[cluster].AppsV1().Deployments(namespace).Patch(deploymentName, types.StrategicMergePatchType, []byte(restartRequest))
+
+		if err != nil {
+			errs = append(errs, err)
+		} else {
+			errs = append(errs, nil)
+		}
+	}
+
+	return errs
+}
+
+func (c ClusterConnection) ScaleDeployment(deploymentName, namespace string, clusters []string, replicas int32) []error {
+
+	var errs []error
+
+	for _, cluster := range clusters {
+		scale, err := c.connections[cluster].AppsV1().Deployments(namespace).GetScale(deploymentName, metav1.GetOptions{})
+		if err != nil {
+			errs = append(errs, err)
+			continue
+		}
+
+		if scale.Spec.Replicas == replicas {
+			errs = append(errs, nil)
+			continue
+		}
+
+		newScale := *scale
+		newScale.Spec.Replicas = replicas
+
+		_, err = c.connections[cluster].AppsV1().Deployments(namespace).UpdateScale(deploymentName, &newScale)
 
 		if err != nil {
 			errs = append(errs, err)
@@ -109,6 +140,7 @@ func main() {
 	router := httprouter.New()
 	router.GET("/resources/deployments", GetDeployments)
 	router.POST("/resources/deployments/restart", RolloutRestartDeployment)
+	router.POST("/resources/deployments/scale", ScaleDeployment)
 
 	srv := &http.Server{
 		Addr:    ":8080",
@@ -121,9 +153,16 @@ func main() {
 }
 
 type RolloutRestartDeploymentRequest struct {
-	DeploymentName string `json:"deploymentName"`
-	Namespace string `json:"namespace"`
-	Clusters []string `json:"clusters"`
+	DeploymentName string   `json:"deploymentName"`
+	Namespace      string   `json:"namespace"`
+	Clusters       []string `json:"clusters"`
+}
+
+type ScaleDeploymentRequest struct {
+	DeploymentName string   `json:"deploymentName"`
+	Namespace      string   `json:"namespace"`
+	Clusters       []string `json:"clusters"`
+	Replicas       int32    `json:"replicas"`
 }
 
 func RolloutRestartDeployment(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
@@ -144,6 +183,29 @@ func RolloutRestartDeployment(w http.ResponseWriter, r *http.Request, _ httprout
 	}
 
 	errs := clusterConnection.RolloutRestartDeployment(request.DeploymentName, request.Namespace, request.Clusters)
+
+	responseByte, _ := json.Marshal(errs)
+	w.Write(responseByte)
+}
+
+func ScaleDeployment(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
+	var request ScaleDeploymentRequest
+	reqBytes, err := ioutil.ReadAll(r.Body)
+
+	if err != nil {
+		fmt.Println(err)
+		w.WriteHeader(http.StatusBadRequest)
+		return
+	}
+
+	err = json.Unmarshal(reqBytes, &request)
+	if err != nil {
+		fmt.Println(err)
+		w.WriteHeader(http.StatusBadRequest)
+		return
+	}
+
+	errs := clusterConnection.ScaleDeployment(request.DeploymentName, request.Namespace, request.Clusters, request.Replicas)
 
 	responseByte, _ := json.Marshal(errs)
 	w.Write(responseByte)
