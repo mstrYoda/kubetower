@@ -97,7 +97,7 @@ func (c ClusterConnection) RolloutRestartDeployment(deploymentName, namespace st
 	return errs
 }
 
-func (c ClusterConnection) ScaleDeployment(deploymentName, namespace string, clusters []string, replica int32) []error {
+func (c ClusterConnection) ScaleDeployment(deploymentName, namespace string, clusters []string, replicas int32) []error {
 
 	var errs []error
 
@@ -107,8 +107,12 @@ func (c ClusterConnection) ScaleDeployment(deploymentName, namespace string, clu
 			errs = append(errs, err)
 		}
 
+		if scale.Spec.Replicas == replicas {
+			return errs
+		}
+
 		newScale := *scale
-		newScale.Spec.Replicas = replica
+		newScale.Spec.Replicas = replicas
 
 		_, err = c.connections[cluster].AppsV1().Deployments(namespace).UpdateScale(deploymentName, &newScale)
 
