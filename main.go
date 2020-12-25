@@ -105,10 +105,12 @@ func (c ClusterConnection) ScaleDeployment(deploymentName, namespace string, clu
 		scale, err := c.connections[cluster].AppsV1().Deployments(namespace).GetScale(deploymentName, metav1.GetOptions{})
 		if err != nil {
 			errs = append(errs, err)
+			continue
 		}
 
 		if scale.Spec.Replicas == replicas {
-			return errs
+			errs = append(errs, nil)
+			continue
 		}
 
 		newScale := *scale
