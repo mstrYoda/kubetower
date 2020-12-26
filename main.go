@@ -128,6 +128,42 @@ func (c ClusterConnection) ScaleDeployment(deploymentName, namespace string, clu
 	return errs
 }
 
+func (c ClusterConnection) RollbackDeployment(deploymentName, replicasetName, namespace string, clusters []string) []error {
+	var errors []error
+
+	for _, cluster := range clusters{
+		rs, err := c.connections[cluster].AppsV1().ReplicaSets(namespace).Get(replicasetName, metav1.GetOptions{})
+
+		if err != nil {
+			fmt.Println(err)
+			errors = append(errors, err)
+			continue
+		}
+
+		deployment, err := c.connections[cluster].AppsV1().Deployments(namespace).Get(deploymentName, metav1.GetOptions{})
+
+		if err != nil {
+			fmt.Println(err)
+			errors = append(errors, err)
+			continue
+		}
+
+		deployment.Spec.Template = rs.Spec.Template
+
+		_, err = c.connections[cluster].AppsV1().Deployments(namespace).Update(deployment)
+
+		if err != nil {
+			fmt.Println(err)
+			errors = append(errors, err)
+			continue
+		}
+
+		errors = append(errors, nil)
+	}
+
+	return errors
+}
+
 func main() {
 	clusterConnection = NewClusterConnection()
 
@@ -141,6 +177,7 @@ func main() {
 	router.GET("/resources/deployments", GetDeployments)
 	router.POST("/resources/deployments/restart", RolloutRestartDeployment)
 	router.POST("/resources/deployments/scale", ScaleDeployment)
+	router.POST("/resources/deployments/rollback", RollbackDeployment)
 
 	srv := &http.Server{
 		Addr:    ":8080",
@@ -163,6 +200,13 @@ type ScaleDeploymentRequest struct {
 	Namespace      string   `json:"namespace"`
 	Clusters       []string `json:"clusters"`
 	Replicas       int32    `json:"replicas"`
+}
+
+type RollbackDeploymentRequest struct {
+	DeploymentName string   `json:"deploymentName"`
+	ReplicaSetName string   `json:"replicaSetName"`
+	Namespace      string   `json:"namespace"`
+	Clusters       []string `json:"clusters"`
 }
 
 func RolloutRestartDeployment(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
@@ -220,4 +264,27 @@ func GetDeployments(w http.ResponseWriter, r *http.Request, _ httprouter.Params)
 
 	w.Write(responseBytes)
 	w.WriteHeader(http.StatusOK)
+}
+
+func RollbackDeployment(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
+	var request RollbackDeploymentRequest
+	reqBytes, err := ioutil.ReadAll(r.Body)
+
+	if err != nil {
+		fmt.Println(err)
+		w.WriteHeader(http.StatusBadRequest)
+		return
+	}
+
+	err = json.Unmarshal(reqBytes, &request)
+	if err != nil {
+		fmt.Println(err)
+		w.WriteHeader(http.StatusBadRequest)
+		return
+	}
+
+	errs := clusterConnection.RollbackDeployment(request.DeploymentName, request.ReplicaSetName, request.Namespace, request.Clusters)
+
+	responseByte, _ := json.Marshal(errs)
+	w.Write(responseByte)
 }
