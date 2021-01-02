@@ -76,6 +76,22 @@ func (c ClusterConnection) GetDeployments(clusters []string) (map[string][]v1.De
 	return deploymentClusterMap, errors
 }
 
+func (c ClusterConnection) GetReplicaSets(clusters []string, namespace string) (map[string][]v1.ReplicaSet, []error) {
+	replicasetClusterMap := make(map[string][]v1.ReplicaSet)
+	var errors []error
+
+	for _, cluster := range clusters {
+		replicaSets, err := c.connections[cluster].AppsV1().ReplicaSets(namespace).List(metav1.ListOptions{})
+		if err != nil {
+			errors = append(errors, err)
+		}
+
+		replicasetClusterMap[cluster] = replicaSets.Items
+	}
+
+	return replicasetClusterMap, errors
+}
+
 var clusterConnection *ClusterConnection
 
 func (c ClusterConnection) RolloutRestartDeployment(deploymentName, namespace string, clusters []string) []error {
@@ -175,6 +191,7 @@ func main() {
 
 	router := httprouter.New()
 	router.GET("/resources/deployments", GetDeployments)
+	router.GET("/resources/replicasets", GetReplicaSets)
 	router.POST("/resources/deployments/restart", RolloutRestartDeployment)
 	router.POST("/resources/deployments/scale", ScaleDeployment)
 	router.POST("/resources/deployments/rollback", RollbackDeployment)
@@ -264,6 +281,26 @@ func GetDeployments(w http.ResponseWriter, r *http.Request, _ httprouter.Params)
 
 	w.Write(responseBytes)
 	w.WriteHeader(http.StatusOK)
+}
+
+func GetReplicaSets(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
+	clusters := r.URL.Query().Get("clusters")
+	namespace := r.URL.Query().Get("namespace")
+	replicaSets, errors := clusterConnection.GetReplicaSets(strings.Split(clusters, ","), namespace)
+	if errors != nil {
+		fmt.Println(errors)
+		w.WriteHeader(http.StatusInternalServerError)
+		return
+	}
+
+	responseBytes, err := json.Marshal(replicaSets)
+	if err != nil {
+		w.WriteHeader(http.StatusInternalServerError)
+		return
+	}
+
+	w.WriteHeader(http.StatusOK)
+	w.Write(responseBytes)
 }
 
 func RollbackDeployment(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
