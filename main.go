@@ -84,9 +84,9 @@ func (c ClusterConnection) GetReplicaSets(clusters []string, namespace string) (
 		replicaSets, err := c.connections[cluster].AppsV1().ReplicaSets(namespace).List(metav1.ListOptions{})
 		if err != nil {
 			errors = append(errors, err)
+		} else {
+			replicasetClusterMap[cluster] = replicaSets.Items
 		}
-
-		replicasetClusterMap[cluster] = replicaSets.Items
 	}
 
 	return replicasetClusterMap, errors
@@ -295,6 +295,7 @@ func GetReplicaSets(w http.ResponseWriter, r *http.Request, _ httprouter.Params)
 
 	responseBytes, err := json.Marshal(replicaSets)
 	if err != nil {
+		fmt.Println(err)
 		w.WriteHeader(http.StatusInternalServerError)
 		return
 	}
