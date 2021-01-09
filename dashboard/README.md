@@ -1,4 +1,4 @@
-# dashboard
+# Kubetower Dashboard
 
 ## Build Setup
 
