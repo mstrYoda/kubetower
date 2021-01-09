@@ -33,7 +33,7 @@ func NewClusterConnection() *ClusterConnection {
 
 	cfg, err := clientcmd.LoadFromFile(*kubeconfig)
 	if err != nil {
-			panic(err.Error())
+		panic(err.Error())
 	}
 
 	clusterConnections := make(map[string]*kubernetes.Clientset)
@@ -149,7 +149,7 @@ func (c ClusterConnection) ScaleDeployment(deploymentName, namespace string, clu
 func (c ClusterConnection) RollbackDeployment(deploymentName, replicasetName, namespace string, clusters []string) []error {
 	var errors []error
 
-	for _, cluster := range clusters{
+	for _, cluster := range clusters {
 		rs, err := c.connections[cluster].AppsV1().ReplicaSets(namespace).Get(replicasetName, metav1.GetOptions{})
 
 		if err != nil {
