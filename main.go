@@ -232,7 +232,7 @@ type RollbackDeploymentRequest struct {
 	Clusters       []string `json:"clusters"`
 }
 
-type GetDeploymentsResponse struct {
+type GetDeploymentsResp struct {
 	ClusterName string          `json:"clusterName"`
 	Deployments []v1.Deployment `json:"deployments"`
 	Error       error           `json:"error"`
@@ -288,7 +288,7 @@ func GetDeployments(w http.ResponseWriter, r *http.Request, _ httprouter.Params)
 	clusters := r.URL.Query().Get("clusters")
 	clusterList := strings.Split(clusters, ",")
 
-	deploymentClusterMap := make([]GetDeploymentsResponse, len(clusterList))
+	deploymentClusterMap := make([]GetDeploymentsResp, len(clusterList))
 
 	deployments, errors := clusterConnection.GetDeployments(clusterList)
 
