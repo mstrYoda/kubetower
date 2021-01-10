@@ -70,6 +70,10 @@ func (c ClusterConnection) GetDeployments(clusters []string) (map[string][]v1.De
 		deployments, err := c.connections[cluster].AppsV1().Deployments("").List(metav1.ListOptions{})
 		if err != nil {
 			errors = append(errors, err)
+			deploymentClusterMap[cluster] = nil
+		} else {
+			errors = append(errors, nil)
+			deploymentClusterMap[cluster] = deployments.Items
 		}
 
 		deploymentClusterMap[cluster] = deployments.Items
@@ -228,6 +232,12 @@ type RollbackDeploymentRequest struct {
 	Clusters       []string `json:"clusters"`
 }
 
+type GetDeploymentsResponse struct {
+	ClusterName string          `json:"clusterName"`
+	Deployments []v1.Deployment `json:"deployments"`
+	Error       error           `json:"error"`
+}
+
 func RolloutRestartDeployment(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
 	var request RolloutRestartDeploymentRequest
 	reqBytes, err := ioutil.ReadAll(r.Body)
@@ -276,13 +286,26 @@ func ScaleDeployment(w http.ResponseWriter, r *http.Request, _ httprouter.Params
 
 func GetDeployments(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
 	clusters := r.URL.Query().Get("clusters")
+	clusterList := strings.Split(clusters, ",")
 
-	deployments, _ := clusterConnection.GetDeployments(strings.Split(clusters, ","))
+	deploymentClusterMap := make([]GetDeploymentsResponse, len(clusterList))
 
-	responseBytes, _ := json.Marshal(deployments)
+	deployments, errors := clusterConnection.GetDeployments(clusterList)
 
-	w.Write(responseBytes)
-	w.WriteHeader(http.StatusOK)
+	for index, cluster := range clusterList {
+		deploymentClusterMap[index].ClusterName = cluster
+		deploymentClusterMap[index].Deployments = deployments[cluster]
+		deploymentClusterMap[index].Error = errors[index]
+	}
+
+	responseBytes, err := json.Marshal(deploymentClusterMap)
+	if err != nil {
+		w.Write([]byte(err.Error()))
+		w.WriteHeader(http.StatusInternalServerError)
+	} else {
+		w.Write(responseBytes)
+		w.WriteHeader(http.StatusOK)
+	}
 }
 
 func GetReplicaSets(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
