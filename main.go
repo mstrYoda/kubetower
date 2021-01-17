@@ -105,7 +105,6 @@ func (c ClusterConnection) GetServices(clusters []string) (map[string][]corev1.S
 		services, err := c.connections[cluster].CoreV1().Services("").List(metav1.ListOptions{})
 		if err != nil {
 			errors = append(errors, err)
-			servicesClusterMap[cluster] = nil
 		} else{
 			errors = append(errors, nil)
 			servicesClusterMap[cluster] = services.Items
@@ -380,6 +379,4 @@ func GetServices(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
 	}
 
 	w.Write(responseBytes)
-	w.WriteHeader(http.StatusOK)
-
 }
