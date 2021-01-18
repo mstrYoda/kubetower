@@ -7,6 +7,7 @@ import (
 	"github.com/julienschmidt/httprouter"
 	"io/ioutil"
 	v1 "k8s.io/api/apps/v1"
+	corev1 "k8s.io/api/core/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/types"
 	"k8s.io/client-go/kubernetes"
@@ -92,6 +93,27 @@ func (c ClusterConnection) GetReplicaSets(clusters []string, namespace string) (
 	}
 
 	return replicasetClusterMap, errors
+}
+
+func (c ClusterConnection) GetServices(clusters []string) (map[string][]corev1.Service, []error) {
+
+	servicesClusterMap := make(map[string][]corev1.Service)
+
+	var errors []error 
+
+	for _, cluster := range clusters {
+		services, err := c.connections[cluster].CoreV1().Services("").List(metav1.ListOptions{})
+		if err != nil {
+			errors = append(errors, err)
+		} else{
+			errors = append(errors, nil)
+			servicesClusterMap[cluster] = services.Items
+		}
+
+	}
+
+	return servicesClusterMap, errors
+
 }
 
 var clusterConnection *ClusterConnection
@@ -190,10 +212,10 @@ func main() {
 
 	//GET resources/deployments?clusters=
 	//PUT resources/deployments
-
 	router := httprouter.New()
 	router.GET("/resources/deployments", GetDeployments)
 	router.GET("/resources/replicasets", GetReplicaSets)
+	router.GET("/resources/services", GetServices)
 	router.POST("/resources/deployments/restart", RolloutRestartDeployment)
 	router.POST("/resources/deployments/scale", ScaleDeployment)
 	router.POST("/resources/deployments/rollback", RollbackDeployment)
@@ -227,6 +249,12 @@ type RollbackDeploymentRequest struct {
 	Namespace      string   `json:"namespace"`
 	Clusters       []string `json:"clusters"`
 }
+
+type GetServicesResponse struct {
+	Clusters	 string               	`json:"clusters"`		
+	Services     []corev1.Service  		`json:"services"`	
+	Error        error                	`json:"error"`	
+}	
 
 func RolloutRestartDeployment(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
 	var request RolloutRestartDeploymentRequest
@@ -327,4 +355,28 @@ func RollbackDeployment(w http.ResponseWriter, r *http.Request, _ httprouter.Par
 
 	responseByte, _ := json.Marshal(errs)
 	w.Write(responseByte)
+}
+
+func GetServices(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
+
+	clusters := r.URL.Query().Get("clusters")
+	clusterList := strings.Split(clusters, ",")
+
+	services, err := clusterConnection.GetServices(clusterList)
+	
+	servicesClusterArray := make([]GetServicesResponse, len(clusterList))
+	for index, cluster := range clusterList {			
+		servicesClusterArray[index].Clusters  = cluster
+		servicesClusterArray[index].Services  = services[cluster]	
+		servicesClusterArray[index].Error  = err[index]		
+		
+	}
+
+	responseBytes, errors := json.MarshalIndent(servicesClusterArray, "", " ")
+	if errors != nil {
+		w.WriteHeader(http.StatusInternalServerError)
+		return 
+	}
+
+	w.Write(responseBytes)
 }
