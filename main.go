@@ -80,7 +80,8 @@ func (c ClusterConnection) GetDeployments(clusters []string) (map[string][]v1.De
 	for _, cluster := range clusters {
 		deployments, err := c.connections[cluster].AppsV1().Deployments("").List(metav1.ListOptions{})
 		if err != nil {
-			sugar.Warnw("an error occured while listing Deployments", "cluster", cluster)
+			sugar.Warnw("an error occured while listing Deployments", "cluster", cluster,
+				"error", err.Error())
 			errors = append(errors, err)
 		}
 
