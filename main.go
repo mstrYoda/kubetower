@@ -99,13 +99,13 @@ func (c ClusterConnection) GetServices(clusters []string) (map[string][]corev1.S
 
 	servicesClusterMap := make(map[string][]corev1.Service)
 
-	var errors []error 
+	var errors []error
 
 	for _, cluster := range clusters {
 		services, err := c.connections[cluster].CoreV1().Services("").List(metav1.ListOptions{})
 		if err != nil {
 			errors = append(errors, err)
-		} else{
+		} else {
 			errors = append(errors, nil)
 			servicesClusterMap[cluster] = services.Items
 		}
@@ -116,16 +116,16 @@ func (c ClusterConnection) GetServices(clusters []string) (map[string][]corev1.S
 }
 
 func (c ClusterConnection) GetNamespaces(cluster []string) (map[string][]corev1.Namespace, []error) {
-	
+
 	namespacesClusterMap := make(map[string][]corev1.Namespace)
 
-	var errors []error 
+	var errors []error
 
 	for _, cluster := range cluster {
 		namespaces, err := c.connections[cluster].CoreV1().Namespaces().List(metav1.ListOptions{})
 		if err != nil {
 			errors = append(errors, err)
-		} else{
+		} else {
 			errors = append(errors, nil)
 			namespacesClusterMap[cluster] = namespaces.Items
 		}
@@ -271,17 +271,17 @@ type RollbackDeploymentRequest struct {
 }
 
 type GetServicesResponse struct {
-	Clusters	 string               	`json:"clusters"`		
-	Services     []corev1.Service  		`json:"services"`	
-	Error        error                	`json:"error"`	
-}	
+	Clusters string           `json:"clusters"`
+	Services []corev1.Service `json:"services"`
+	Error    error            `json:"error"`
+}
 
 type GetNamespacesResponse struct {
-	Clusters	 string               	`json:"clusters"`		
-	Namespaces   []corev1.Namespace  	`json:"namespaces"`	
-	Error        error                	`json:"error"`	
-	
+	Clusters   string             `json:"clusters"`
+	Namespaces []corev1.Namespace `json:"namespaces"`
+	Error      error              `json:"error"`
 }
+
 func RolloutRestartDeployment(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
 	var request RolloutRestartDeploymentRequest
 	reqBytes, err := ioutil.ReadAll(r.Body)
@@ -389,19 +389,19 @@ func GetServices(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
 	clusterList := strings.Split(clusters, ",")
 
 	services, err := clusterConnection.GetServices(clusterList)
-	
+
 	servicesClusterArray := make([]GetServicesResponse, len(clusterList))
-	for index, cluster := range clusterList {			
-		servicesClusterArray[index].Clusters  = cluster
-		servicesClusterArray[index].Services  = services[cluster]	
-		servicesClusterArray[index].Error  = err[index]		
-		
+	for index, cluster := range clusterList {
+		servicesClusterArray[index].Clusters = cluster
+		servicesClusterArray[index].Services = services[cluster]
+		servicesClusterArray[index].Error = err[index]
+
 	}
 
 	responseBytes, errors := json.MarshalIndent(servicesClusterArray, "", " ")
 	if errors != nil {
 		w.WriteHeader(http.StatusInternalServerError)
-		return 
+		return
 	}
 
 	w.Write(responseBytes)
@@ -416,9 +416,9 @@ func GetNamespaces(w http.ResponseWriter, r *http.Request, _ httprouter.Params) 
 
 	namespacesClusterArray := make([]GetNamespacesResponse, len(clusterList))
 	for index, cluster := range clusterList {
-		namespacesClusterArray[index].Clusters   = cluster
+		namespacesClusterArray[index].Clusters = cluster
 		namespacesClusterArray[index].Namespaces = namespaces[cluster]
-		namespacesClusterArray[index].Error = err[index] 
+		namespacesClusterArray[index].Error = err[index]
 
 	}
 
