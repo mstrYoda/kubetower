@@ -3,8 +3,8 @@ package main
 import (
 	"encoding/json"
 	"flag"
-	"fmt"
 	"github.com/julienschmidt/httprouter"
+	"go.uber.org/zap"
 	"io/ioutil"
 	v1 "k8s.io/api/apps/v1"
 	corev1 "k8s.io/api/core/v1"
@@ -18,6 +18,14 @@ import (
 	"strings"
 	"time"
 )
+
+var (
+	logger *zap.Logger
+)
+
+func init() {
+	logger, _ = zap.NewProduction()
+}
 
 type ClusterConnection struct {
 	connections map[string]*kubernetes.Clientset
@@ -34,7 +42,7 @@ func NewClusterConnection() *ClusterConnection {
 
 	cfg, err := clientcmd.LoadFromFile(*kubeconfig)
 	if err != nil {
-		panic(err.Error())
+		logger.Panic(err.Error())
 	}
 
 	clusterConnections := make(map[string]*kubernetes.Clientset)
@@ -45,12 +53,12 @@ func NewClusterConnection() *ClusterConnection {
 
 		restConfig, err := cc.ClientConfig()
 		if err != nil {
-			panic(err.Error())
+			logger.Panic(err.Error())
 		}
 
 		clientSet, err := kubernetes.NewForConfig(restConfig)
 		if err != nil {
-			panic(err.Error())
+			logger.Panic(err.Error())
 		}
 
 		clusterConnections[context.Cluster] = clientSet
@@ -70,6 +78,8 @@ func (c ClusterConnection) GetDeployments(clusters []string) (map[string][]v1.De
 	for _, cluster := range clusters {
 		deployments, err := c.connections[cluster].AppsV1().Deployments("").List(metav1.ListOptions{})
 		if err != nil {
+			logger.Warn("an error occured while listing Deployments", zap.String("cluster", cluster),
+				zap.String("error", err.Error()))
 			errors = append(errors, err)
 		}
 
@@ -86,6 +96,8 @@ func (c ClusterConnection) GetReplicaSets(clusters []string, namespace string) (
 	for _, cluster := range clusters {
 		replicaSets, err := c.connections[cluster].AppsV1().ReplicaSets(namespace).List(metav1.ListOptions{})
 		if err != nil {
+			logger.Warn("an error occured while listing ReplicaSets", zap.String("cluster", cluster),
+				zap.String("namespace", namespace), zap.String("error", err.Error()))
 			errors = append(errors, err)
 		} else {
 			replicasetClusterMap[cluster] = replicaSets.Items
@@ -104,8 +116,10 @@ func (c ClusterConnection) GetServices(clusters []string) (map[string][]corev1.S
 	for _, cluster := range clusters {
 		services, err := c.connections[cluster].CoreV1().Services("").List(metav1.ListOptions{})
 		if err != nil {
+			logger.Warn("an error occured while listing all services", zap.String("cluster", cluster),
+				zap.String("error", err.Error()))
 			errors = append(errors, err)
-		} else {
+		} else{
 			errors = append(errors, nil)
 			servicesClusterMap[cluster] = services.Items
 		}
@@ -113,6 +127,7 @@ func (c ClusterConnection) GetServices(clusters []string) (map[string][]corev1.S
 	}
 
 	return servicesClusterMap, errors
+
 }
 
 func (c ClusterConnection) GetNamespaces(cluster []string) (map[string][]corev1.Namespace, []error) {
@@ -124,6 +139,8 @@ func (c ClusterConnection) GetNamespaces(cluster []string) (map[string][]corev1.
 	for _, cluster := range cluster {
 		namespaces, err := c.connections[cluster].CoreV1().Namespaces().List(metav1.ListOptions{})
 		if err != nil {
+			logger.Warn("an error occured while listing all namespaces", zap.String("cluster", cluster),
+				zap.String("error", err.Error()))
 			errors = append(errors, err)
 		} else {
 			errors = append(errors, nil)
@@ -145,8 +162,10 @@ func (c ClusterConnection) RolloutRestartDeployment(deploymentName, namespace st
 
 	for _, cluster := range clusters {
 		_, err := c.connections[cluster].AppsV1().Deployments(namespace).Patch(deploymentName, types.StrategicMergePatchType, []byte(restartRequest))
-
 		if err != nil {
+			logger.Warn("an error occured while patching deployment", zap.String("cluster", cluster),
+				zap.String("deployment", deploymentName), zap.String("namespace", namespace),
+				zap.String("error", err.Error()))
 			errs = append(errs, err)
 		} else {
 			errs = append(errs, nil)
@@ -163,6 +182,9 @@ func (c ClusterConnection) ScaleDeployment(deploymentName, namespace string, clu
 	for _, cluster := range clusters {
 		scale, err := c.connections[cluster].AppsV1().Deployments(namespace).GetScale(deploymentName, metav1.GetOptions{})
 		if err != nil {
+			logger.Warn("an error occured while getting autoscalingv1.Scale object", zap.String("cluster", cluster),
+				zap.String("deployment", deploymentName), zap.String("namespace", namespace),
+				zap.String("error", err.Error()))
 			errs = append(errs, err)
 			continue
 		}
@@ -176,8 +198,10 @@ func (c ClusterConnection) ScaleDeployment(deploymentName, namespace string, clu
 		newScale.Spec.Replicas = replicas
 
 		_, err = c.connections[cluster].AppsV1().Deployments(namespace).UpdateScale(deploymentName, &newScale)
-
 		if err != nil {
+			logger.Warn("an error occured while updating autoscalingv1.Scale object", zap.String("cluster", cluster),
+				zap.String("deployment", deploymentName), zap.String("namespace", namespace),
+				zap.String("error", err.Error()))
 			errs = append(errs, err)
 		} else {
 			errs = append(errs, nil)
@@ -194,7 +218,9 @@ func (c ClusterConnection) RollbackDeployment(deploymentName, replicasetName, na
 		rs, err := c.connections[cluster].AppsV1().ReplicaSets(namespace).Get(replicasetName, metav1.GetOptions{})
 
 		if err != nil {
-			fmt.Println(err)
+			logger.Warn("an error occured while getting replicaSet", zap.String("cluster", cluster),
+				zap.String("replicaSet", replicasetName), zap.String("namespace", namespace),
+				zap.String("error", err.Error()))
 			errors = append(errors, err)
 			continue
 		}
@@ -202,7 +228,9 @@ func (c ClusterConnection) RollbackDeployment(deploymentName, replicasetName, na
 		deployment, err := c.connections[cluster].AppsV1().Deployments(namespace).Get(deploymentName, metav1.GetOptions{})
 
 		if err != nil {
-			fmt.Println(err)
+			logger.Warn("an error occured while getting deployment", zap.String("cluster", cluster),
+				zap.String("deployment", deploymentName), zap.String("namespace", namespace),
+				zap.String("error", err.Error()))
 			errors = append(errors, err)
 			continue
 		}
@@ -212,7 +240,9 @@ func (c ClusterConnection) RollbackDeployment(deploymentName, replicasetName, na
 		_, err = c.connections[cluster].AppsV1().Deployments(namespace).Update(deployment)
 
 		if err != nil {
-			fmt.Println(err)
+			logger.Warn("an error occured while updating deployment", zap.String("cluster", cluster),
+				zap.String("deployment", deploymentName), zap.String("namespace", namespace),
+				zap.String("error", err.Error()))
 			errors = append(errors, err)
 			continue
 		}
@@ -246,7 +276,7 @@ func main() {
 	}
 
 	if err := srv.ListenAndServe(); err != nil {
-		panic(err)
+		logger.Panic(err.Error())
 	}
 }
 
@@ -287,14 +317,14 @@ func RolloutRestartDeployment(w http.ResponseWriter, r *http.Request, _ httprout
 	reqBytes, err := ioutil.ReadAll(r.Body)
 
 	if err != nil {
-		fmt.Println(err)
+		logger.Error("an error occured while reading request body", zap.String("error", err.Error()))
 		w.WriteHeader(http.StatusBadRequest)
 		return
 	}
 
 	err = json.Unmarshal(reqBytes, &request)
 	if err != nil {
-		fmt.Println(err)
+		logger.Error("an error occured while unmarshalling", zap.String("error", err.Error()))
 		w.WriteHeader(http.StatusBadRequest)
 		return
 	}
@@ -310,14 +340,14 @@ func ScaleDeployment(w http.ResponseWriter, r *http.Request, _ httprouter.Params
 	reqBytes, err := ioutil.ReadAll(r.Body)
 
 	if err != nil {
-		fmt.Println(err)
+		logger.Error("an error occured while reading request body", zap.String("error", err.Error()))
 		w.WriteHeader(http.StatusBadRequest)
 		return
 	}
 
 	err = json.Unmarshal(reqBytes, &request)
 	if err != nil {
-		fmt.Println(err)
+		logger.Error("an error occured while unmarshalling", zap.String("error", err.Error()))
 		w.WriteHeader(http.StatusBadRequest)
 		return
 	}
@@ -344,14 +374,14 @@ func GetReplicaSets(w http.ResponseWriter, r *http.Request, _ httprouter.Params)
 	namespace := r.URL.Query().Get("namespace")
 	replicaSets, errors := clusterConnection.GetReplicaSets(strings.Split(clusters, ","), namespace)
 	if errors != nil {
-		fmt.Println(errors)
+		logger.Error("an error occured while getting replicasets", zap.Any("errors", errors))
 		w.WriteHeader(http.StatusInternalServerError)
 		return
 	}
 
 	responseBytes, err := json.Marshal(replicaSets)
 	if err != nil {
-		fmt.Println(err)
+		logger.Error("an error occured while marshalling", zap.String("error", err.Error()))
 		w.WriteHeader(http.StatusInternalServerError)
 		return
 	}
@@ -365,14 +395,14 @@ func RollbackDeployment(w http.ResponseWriter, r *http.Request, _ httprouter.Par
 	reqBytes, err := ioutil.ReadAll(r.Body)
 
 	if err != nil {
-		fmt.Println(err)
+		logger.Error("an error occured while reading request body", zap.String("error", err.Error()))
 		w.WriteHeader(http.StatusBadRequest)
 		return
 	}
 
 	err = json.Unmarshal(reqBytes, &request)
 	if err != nil {
-		fmt.Println(err)
+		logger.Error("an error occured while unmarshalling", zap.String("error", err.Error()))
 		w.WriteHeader(http.StatusBadRequest)
 		return
 	}
@@ -400,6 +430,7 @@ func GetServices(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
 
 	responseBytes, errors := json.MarshalIndent(servicesClusterArray, "", " ")
 	if errors != nil {
+		logger.Error("an error occured while marshalling", zap.Any("errors", errors))
 		w.WriteHeader(http.StatusInternalServerError)
 		return
 	}
@@ -424,6 +455,7 @@ func GetNamespaces(w http.ResponseWriter, r *http.Request, _ httprouter.Params) 
 
 	responseBytes, errors := json.MarshalIndent(namespacesClusterArray, "", " ")
 	if errors != nil {
+		logger.Error("an error occured while marshalling", zap.Any("errors", errors))
 		w.WriteHeader(http.StatusInternalServerError)
 		return
 	}
