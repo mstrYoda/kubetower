@@ -119,7 +119,7 @@ func (c ClusterConnection) GetServices(clusters []string) (map[string][]corev1.S
 			logger.Warn("an error occured while listing all services", zap.String("cluster", cluster),
 				zap.String("error", err.Error()))
 			errors = append(errors, err)
-		} else{
+		} else {
 			errors = append(errors, nil)
 			servicesClusterMap[cluster] = services.Items
 		}
@@ -272,7 +272,7 @@ func main() {
 
 	srv := &http.Server{
 		Addr:    ":8080",
-		Handler: router,
+		Handler: corsMiddleware(router),
 	}
 
 	if err := srv.ListenAndServe(); err != nil {
@@ -310,6 +310,14 @@ type GetNamespacesResponse struct {
 	Clusters   string             `json:"clusters"`
 	Namespaces []corev1.Namespace `json:"namespaces"`
 	Error      error              `json:"error"`
+}
+
+func corsMiddleware(nextHandler http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		w.Header().Add("Access-Control-Allow-Origin", "*")
+
+		nextHandler.ServeHTTP(w, r)
+	})
 }
 
 func RolloutRestartDeployment(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
